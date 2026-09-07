@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { EchoProvider } from './context/EchoContext';
 import { Header } from './components/Header';
 import { SkyCanvas } from './features/sky/SkyCanvas';
+import { ConstellationGraph } from './features/constellation/ConstellationGraph';
 import { CastMomentModal } from './features/cast/CastMomentModal';
 import { MutualRevealModal } from './features/resonance/MutualRevealModal';
 
@@ -26,11 +27,7 @@ const MainAppContent: React.FC = () => {
       {/* Main View Area */}
       <main className="relative z-10 flex-1 flex flex-col w-full">
         {currentView === 'sky' && <SkyCanvas />}
-        {currentView === 'constellation' && (
-          <div className="flex-1 flex items-center justify-center p-8 text-center text-ink-600">
-            <p className="font-serif text-xl">Constellation node-graph view will render here.</p>
-          </div>
-        )}
+        {currentView === 'constellation' && <ConstellationGraph />}
       </main>
 
       {/* Casting Flow Modal */}
