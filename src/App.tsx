@@ -5,6 +5,7 @@ import { SkyCanvas } from './features/sky/SkyCanvas';
 import { ConstellationGraph } from './features/constellation/ConstellationGraph';
 import { CastMomentModal } from './features/cast/CastMomentModal';
 import { MutualRevealModal } from './features/resonance/MutualRevealModal';
+import { SlowThreadsModal } from './features/threads/SlowThreadsModal';
 
 const MainAppContent: React.FC = () => {
   const [currentView, setCurrentView] = useState<'sky' | 'constellation'>('sky');
@@ -35,6 +36,9 @@ const MainAppContent: React.FC = () => {
 
       {/* Mutual Match Resonance Reveal */}
       <MutualRevealModal onOpenConstellation={() => setCurrentView('constellation')} />
+
+      {/* Slow Threads Ephemeral Messaging */}
+      <SlowThreadsModal />
     </div>
   );
 };
