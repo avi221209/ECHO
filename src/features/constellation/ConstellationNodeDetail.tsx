@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { X, Mail, UserMinus, Calendar } from 'lucide-react';
 import { ConstellationEntry } from '../../types';
 import { useEcho } from '../../hooks/useEcho';
+import { useFocusTrap } from '../../hooks/useFocusTrap';
 import { AbstractAvatar } from '../../components/AbstractAvatar';
 import { ResonanceGlyph } from '../../components/ResonanceGlyph';
 
@@ -14,6 +15,7 @@ export const ConstellationNodeDetail: React.FC<ConstellationNodeDetailProps> = (
   entry,
   onClose,
 }) => {
+  const modalRef = useFocusTrap<HTMLDivElement>(true);
   const {
     moments,
     removeConstellationEntry,
@@ -29,6 +31,17 @@ export const ConstellationNodeDetail: React.FC<ConstellationNodeDetailProps> = (
 
   const catalystMoment = moments.find((m) => m.id === entry.resonanceMomentId);
 
+  // Close on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
+
   const handleOpenThread = () => {
     setActiveThreadUser(entry.user);
     setIsSlowThreadsOpen(true);
@@ -42,9 +55,12 @@ export const ConstellationNodeDetail: React.FC<ConstellationNodeDetailProps> = (
 
   return (
     <div
+      ref={modalRef}
       role="dialog"
+      aria-modal="true"
       aria-label={`Connection story with ${entry.user.displayName}`}
-      className="relative w-full max-w-lg mx-auto p-7 sm:p-9 rounded-[2rem] bg-cream-50/95 border-2 border-resonance-400/80 shadow-2xl backdrop-blur-2xl z-30 animate-in fade-in zoom-in-95 duration-200"
+      tabIndex={-1}
+      className="relative w-full max-w-lg mx-auto p-7 sm:p-9 rounded-[2rem] bg-cream-50/95 border-2 border-resonance-400/80 shadow-2xl backdrop-blur-2xl z-30 animate-in fade-in zoom-in-95 duration-200 focus:outline-none"
     >
       {/* Close button */}
       <button

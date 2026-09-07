@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { X, Send, Feather, Eye } from 'lucide-react';
 import { useEcho } from '../../hooks/useEcho';
+import { useFocusTrap } from '../../hooks/useFocusTrap';
 import { User, SlowMessage } from '../../types';
 import { AbstractAvatar } from '../../components/AbstractAvatar';
 import { cleanUserInput } from '../../utils/sanitize';
+import { playLetterUnfoldSound } from '../../utils/audio';
 
 const MAX_MSG_CHARS = 300;
 
@@ -19,6 +21,8 @@ export const SlowThreadsModal: React.FC = () => {
     sendSlowMessage,
     markMessageRead,
   } = useEcho();
+
+  const modalRef = useFocusTrap<HTMLDivElement>(isSlowThreadsOpen);
 
   const selectedUser: User | null = useMemo(() => {
     if (activeThreadUser) return activeThreadUser;
@@ -60,6 +64,11 @@ export const SlowThreadsModal: React.FC = () => {
       )
     : [];
 
+  const handleUnfoldLetter = (msgId: string) => {
+    playLetterUnfoldSound();
+    markMessageRead(msgId);
+  };
+
   const handleSend = (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedUser || !letterText.trim() || isSending) return;
@@ -88,7 +97,11 @@ export const SlowThreadsModal: React.FC = () => {
         aria-hidden="true"
       />
 
-      <div className="relative w-full max-w-4xl h-[88vh] max-h-[740px] flex flex-col md:flex-row rounded-[2.5rem] bg-cream-50/95 border-2 border-resonance-300/80 shadow-2xl z-10 overflow-hidden">
+      <div
+        ref={modalRef}
+        tabIndex={-1}
+        className="relative w-full max-w-4xl h-[88vh] max-h-[740px] flex flex-col md:flex-row rounded-[2.5rem] bg-cream-50/95 border-2 border-resonance-300/80 shadow-2xl z-10 overflow-hidden focus:outline-none"
+      >
         {/* Left Column: Addressing the Circle */}
         <aside className="w-full md:w-72 border-b md:border-b-0 md:border-r border-resonance-200/70 bg-cream-100/60 flex flex-col shrink-0">
           <div className="p-5 border-b border-resonance-200/60 flex items-center justify-between">
@@ -247,7 +260,7 @@ export const SlowThreadsModal: React.FC = () => {
                                 {!isRead ? (
                                   <button
                                     type="button"
-                                    onClick={() => markMessageRead(msg.id)}
+                                    onClick={() => handleUnfoldLetter(msg.id)}
                                     className="px-3 py-1 bg-resonance-500 hover:bg-resonance-600 text-cream-50 rounded-full font-medium transition-colors flex items-center space-x-1.5 shadow-xs"
                                   >
                                     <Eye className="w-3 h-3" />

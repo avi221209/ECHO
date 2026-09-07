@@ -10,20 +10,19 @@ import {
   Sliders,
 } from 'lucide-react';
 import { useEcho } from '../hooks/useEcho';
-import { CONSTELLATION_CAP, ConstellationEntry } from '../types';
+import { useFocusTrap } from '../hooks/useFocusTrap';
 
 export const EvaluatorMode: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const modalRef = useFocusTrap<HTMLDivElement>(isOpen);
   const {
     resetToDefaults,
-    users,
-    moments,
+    fillConstellationToCap,
+    triggerMutualRevealDemo,
     constellation,
-    currentUser,
-    resonate,
-    setSelectedMoment,
     sendSlowMessage,
     markMessageRead,
+    setIsSlowThreadsOpen,
   } = useEcho();
 
   // Keyboard shortcut: Ctrl + Shift + E or Cmd + Shift + E
@@ -57,44 +56,15 @@ export const EvaluatorMode: React.FC = () => {
     );
   }
 
-  // Quick action: Fill constellation to 15 to test the philosophical full-circle cap
+  // Quick action: Fill constellation to 15 cleanly via context
   const handleFillConstellation = () => {
-    const existingIds = new Set(constellation.map((c) => c.userId));
-    const candidateUsers = Object.values(users).filter(
-      (u) => !existingIds.has(u.id) && u.id !== currentUser.id
-    );
-
-    const needed = CONSTELLATION_CAP - constellation.length;
-    if (needed <= 0) return;
-
-    candidateUsers.slice(0, needed).forEach((user, i) => {
-      const randomMoment = moments[i % moments.length];
-      const newEntry: ConstellationEntry = {
-        id: `constellation-${user.id}-${Date.now() + i}`,
-        userId: user.id,
-        connectedAt: Date.now() - (i + 1) * 1000 * 60 * 60 * 24,
-        resonanceMomentId: randomMoment.id,
-        user,
-      };
-      const current = JSON.parse(
-        localStorage.getItem('echo_constellation_v1') || '[]'
-      );
-      localStorage.setItem(
-        'echo_constellation_v1',
-        JSON.stringify([...current, newEntry])
-      );
-    });
-
-    window.dispatchEvent(new Event('storage'));
-    window.location.reload();
+    fillConstellationToCap();
+    setIsOpen(false);
   };
 
-  // Quick action: trigger the mutual match reveal instantly
+  // Quick action: trigger the mutual match reveal instantly via context
   const handleTriggerMutualReveal = () => {
-    // moment-1 is Elena Vance (pre-seeded for mutual match)
-    const elenaMoment = moments.find((m) => m.id === 'moment-1') || moments[0];
-    setSelectedMoment(elenaMoment);
-    resonate(elenaMoment.id);
+    triggerMutualRevealDemo();
     setIsOpen(false);
   };
 
@@ -110,6 +80,8 @@ export const EvaluatorMode: React.FC = () => {
         markMessageRead(msg.id);
       }
     }
+    setIsSlowThreadsOpen(true);
+    setIsOpen(false);
   };
 
   return (
@@ -119,7 +91,11 @@ export const EvaluatorMode: React.FC = () => {
       aria-labelledby="evaluator-modal-title"
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-cream-950/40 backdrop-blur-md animate-in fade-in duration-200"
     >
-      <div className="relative w-full max-w-md bg-cream-50 rounded-3xl border-2 border-resonance-400/80 shadow-2xl p-6 text-ink-900">
+      <div
+        ref={modalRef}
+        className="relative w-full max-w-md bg-cream-50 rounded-3xl border-2 border-resonance-400/80 shadow-2xl p-6 text-ink-900 focus:outline-none"
+        tabIndex={-1}
+      >
         <div className="flex items-center justify-between pb-3 border-b border-resonance-200">
           <div className="flex items-center space-x-2">
             <Sliders className="w-4 h-4 text-resonance-600" />
@@ -188,7 +164,7 @@ export const EvaluatorMode: React.FC = () => {
             type="button"
             onClick={() => {
               resetToDefaults();
-              window.location.reload();
+              setIsOpen(false);
             }}
             className="w-full p-2.5 rounded-xl bg-cream-100 hover:bg-rose-50 text-ink-700 hover:text-rose-800 border border-resonance-200 text-xs font-medium flex items-center space-x-2.5 transition-colors text-left"
           >

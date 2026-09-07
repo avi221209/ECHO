@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useCallback } from 'react';
+import React, { useMemo, useState, useCallback, useRef, useEffect } from 'react';
 import { useEcho } from '../../hooks/useEcho';
 import { MomentLight } from './MomentLight';
 import { MomentFloatingCard } from './MomentFloatingCard';
@@ -17,6 +17,7 @@ export const SkyCanvas: React.FC = () => {
 
   // Pointer position in percentage coordinates for proximity physics
   const [pointerPos, setPointerPos] = useState<{ x: number; y: number } | null>(null);
+  const rafIdRef = useRef<number | null>(null);
 
   // Filter moments by active mood filter and exclude expired
   const filteredMoments = useMemo(() => {
@@ -28,16 +29,39 @@ export const SkyCanvas: React.FC = () => {
     });
   }, [moments, activeMoodFilter]);
 
-  // Handle pointer move over the spatial light field
+  // Throttled pointer move over the spatial light field via requestAnimationFrame
   const handlePointerMove = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    setPointerPos({ x, y });
+    const clientX = e.clientX;
+    const clientY = e.clientY;
+    const currentTarget = e.currentTarget;
+
+    if (rafIdRef.current !== null) {
+      cancelAnimationFrame(rafIdRef.current);
+    }
+
+    rafIdRef.current = requestAnimationFrame(() => {
+      if (!currentTarget) return;
+      const rect = currentTarget.getBoundingClientRect();
+      const x = ((clientX - rect.left) / rect.width) * 100;
+      const y = ((clientY - rect.top) / rect.height) * 100;
+      setPointerPos({ x, y });
+    });
   }, []);
 
   const handlePointerLeave = useCallback(() => {
+    if (rafIdRef.current !== null) {
+      cancelAnimationFrame(rafIdRef.current);
+      rafIdRef.current = null;
+    }
     setPointerPos(null);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (rafIdRef.current !== null) {
+        cancelAnimationFrame(rafIdRef.current);
+      }
+    };
   }, []);
 
   return (

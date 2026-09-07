@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Feather, Clock } from 'lucide-react';
 import { MoodType, MOOD_DEFINITIONS } from '../../types';
 import { useEcho } from '../../hooks/useEcho';
+import { useFocusTrap } from '../../hooks/useFocusTrap';
 import { cleanUserInput } from '../../utils/sanitize';
 import { ResonanceGlyph } from '../../components/ResonanceGlyph';
 
@@ -17,6 +18,7 @@ const MOOD_KEYS: MoodType[] = [
 
 export const CastMomentModal: React.FC = () => {
   const { isCastOpen, setIsCastOpen, castMoment, setSelectedMoment } = useEcho();
+  const modalRef = useFocusTrap<HTMLDivElement>(isCastOpen);
   const [text, setText] = useState('');
   const [selectedMood, setSelectedMood] = useState<MoodType>('reflective');
   const [isReleasing, setIsReleasing] = useState(false);
@@ -88,6 +90,8 @@ export const CastMomentModal: React.FC = () => {
       {/* The Physical Composition Sheet */}
       <AnimatePresence>
         <motion.div
+          ref={modalRef}
+          tabIndex={-1}
           animate={
             isReleasing
               ? {
@@ -100,7 +104,7 @@ export const CastMomentModal: React.FC = () => {
               : { scale: 1, y: 0, opacity: 1 }
           }
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="relative w-full max-w-xl mx-auto rounded-[2rem] bg-cream-50/95 border-2 border-resonance-400/70 shadow-2xl p-7 sm:p-10 z-10 overflow-hidden"
+          className="relative w-full max-w-xl mx-auto rounded-[2rem] bg-cream-50/95 border-2 border-resonance-400/70 shadow-2xl p-7 sm:p-10 z-10 overflow-hidden focus:outline-none"
         >
           {/* Luminous release particle beacon */}
           {isReleasing && (

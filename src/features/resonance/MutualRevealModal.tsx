@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Compass, X } from 'lucide-react';
 import { useEcho } from '../../hooks/useEcho';
+import { useFocusTrap } from '../../hooks/useFocusTrap';
 import { AbstractAvatar } from '../../components/AbstractAvatar';
 import { ResonanceGlyph } from '../../components/ResonanceGlyph';
 import { CONSTELLATION_CAP } from '../../types';
@@ -22,6 +23,7 @@ export const MutualRevealModal: React.FC<MutualRevealModalProps> = ({
     setIsSlowThreadsOpen,
   } = useEcho();
 
+  const modalRef = useFocusTrap<HTMLDivElement>(Boolean(mutualMatchEvent));
   const [phase, setPhase] = useState<'converging' | 'synchronized' | 'revealed'>('converging');
 
   useEffect(() => {
@@ -108,11 +110,13 @@ export const MutualRevealModal: React.FC<MutualRevealModalProps> = ({
 
         {/* The Hero Revelation Chamber */}
         <motion.div
+          ref={modalRef}
+          tabIndex={-1}
           initial={{ opacity: 0, scale: 0.92, y: 15 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="relative w-full max-w-xl mx-auto rounded-[2.5rem] bg-cream-50/95 border-2 border-resonance-400/80 shadow-2xl p-7 sm:p-12 z-10 text-center overflow-hidden"
+          className="relative w-full max-w-xl mx-auto rounded-[2.5rem] bg-cream-50/95 border-2 border-resonance-400/80 shadow-2xl p-7 sm:p-12 z-10 text-center overflow-hidden focus:outline-none"
         >
           {/* Dismiss button */}
           <button

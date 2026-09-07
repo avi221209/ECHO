@@ -29,6 +29,7 @@ export interface EchoContextType {
   isSlowThreadsOpen: boolean;
   activeThreadUser: User | null;
   mutualMatchEvent: MutualMatchEvent | null;
+  audioMuted: boolean;
   
   // Actions
   castMoment: (text: string, mood: MoodType) => Moment;
@@ -47,6 +48,9 @@ export interface EchoContextType {
   dismissMutualMatch: () => void;
   rotatePrompt: () => void;
   resetToDefaults: () => void;
+  fillConstellationToCap: () => void;
+  triggerMutualRevealDemo: () => void;
+  toggleAudio: () => boolean;
 }
 
 export const EchoContext = createContext<EchoContextType | undefined>(undefined);

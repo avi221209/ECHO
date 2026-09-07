@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparkles, Compass } from 'lucide-react';
+import { Sparkles, Compass, Volume2, VolumeX } from 'lucide-react';
 import { useEcho } from '../hooks/useEcho';
 
 interface HeaderProps {
@@ -8,7 +8,7 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ currentView, onSelectView }) => {
-  const { constellation } = useEcho();
+  const { constellation, audioMuted, toggleAudio } = useEcho();
 
   return (
     <header className="relative z-30 w-full px-6 sm:px-10 py-5 flex items-center justify-between pointer-events-none">
@@ -57,8 +57,24 @@ export const Header: React.FC<HeaderProps> = ({ currentView, onSelectView }) => 
         )}
       </div>
 
-      {/* Top Right: Ambient Philosophy Whisper */}
-      <div className="pointer-events-auto text-right">
+      {/* Top Right: Ambient Philosophy Whisper & Sound Toggle */}
+      <div className="pointer-events-auto flex items-center space-x-3 text-right">
+        <button
+          type="button"
+          onClick={toggleAudio}
+          className="p-1.5 rounded-full bg-cream-50/80 hover:bg-cream-100 text-ink-600 hover:text-ink-900 border border-resonance-300/60 shadow-xs transition-colors flex items-center space-x-1 text-xs"
+          aria-label={audioMuted ? 'Unmute ambient harmonic audio' : 'Mute ambient harmonic audio'}
+          title={audioMuted ? 'Unmute audio' : 'Mute audio'}
+        >
+          {audioMuted ? (
+            <VolumeX className="w-3.5 h-3.5 text-ink-400" />
+          ) : (
+            <Volume2 className="w-3.5 h-3.5 text-resonance-600" />
+          )}
+          <span className="hidden sm:inline font-light text-[11px]">
+            {audioMuted ? 'Muted' : 'Sound On'}
+          </span>
+        </button>
         <p className="text-[11px] font-serif italic text-ink-500 hidden sm:block">
           “Social should feel discovered, not consumed.”
         </p>

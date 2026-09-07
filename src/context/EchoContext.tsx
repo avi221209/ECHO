@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import {
   Moment,
   User,
@@ -15,55 +15,63 @@ import {
 } from '../data/seedMoments';
 import { DAILY_PROMPTS } from '../data/seedPrompts';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import { playHarmonicChime } from '../utils/audio';
+import {
+  playHarmonicChime,
+  isAudioMuted,
+  toggleAudioMuted,
+} from '../utils/audio';
 import { cleanUserInput } from '../utils/sanitize';
+import {
+  validateMomentsArray,
+  validateConstellationArray,
+  validateSlowMessagesArray,
+} from '../utils/validation';
 import { EchoContext, MutualMatchEvent } from './echoContextInstance';
 
 export const EchoProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // Moments storage
+  // Defensive storage with runtime type-guard schema validators
   const [moments, setMoments] = useLocalStorage<Moment[]>(
     'echo_moments_v1',
-    SEED_MOMENTS
+    SEED_MOMENTS,
+    validateMomentsArray
   );
 
-  // User resonances tracking (momentId -> boolean)
   const [userResonances, setUserResonances] = useLocalStorage<Record<string, boolean>>(
     'echo_user_resonances_v1',
     {}
   );
 
-  // Mutual resonances tracking (momentId -> boolean)
   const [mutualResonances, setMutualResonances] = useLocalStorage<Record<string, boolean>>(
     'echo_mutual_resonances_v1',
     {}
   );
 
-  // Constellation connections (max 15)
-  const initialConstellation: ConstellationEntry[] = INITIAL_CONSTELLATION_USER_IDS.map(
-    (userId, idx) => ({
-      id: `constellation-${userId}`,
-      userId,
-      connectedAt: Date.now() - (idx + 1) * 1000 * 60 * 60 * 24 * 3,
-      resonanceMomentId: idx === 0 ? 'moment-2' : 'moment-7',
-      user: SEED_USERS[userId] || {
-        id: userId,
-        displayName: 'A Quiet Friend',
-        avatarSeed: userId,
-        bio: 'Connected through mutual stillness.',
-        joinedAt: Date.now(),
-      },
-    })
+  const initialConstellation: ConstellationEntry[] = useMemo(
+    () =>
+      INITIAL_CONSTELLATION_USER_IDS.map((userId, idx) => ({
+        id: `constellation-${userId}`,
+        userId,
+        connectedAt: Date.now() - (idx + 1) * 1000 * 60 * 60 * 24 * 3,
+        resonanceMomentId: idx === 0 ? 'moment-2' : 'moment-7',
+        user: SEED_USERS[userId] || {
+          id: userId,
+          displayName: 'A Quiet Friend',
+          avatarSeed: userId,
+          bio: 'Connected through mutual stillness.',
+          joinedAt: Date.now(),
+        },
+      })),
+    []
   );
 
   const [constellation, setConstellation] = useLocalStorage<ConstellationEntry[]>(
     'echo_constellation_v1',
-    initialConstellation
+    initialConstellation,
+    validateConstellationArray
   );
 
-  // Slow Messages
-  const [slowMessages, setSlowMessages] = useLocalStorage<SlowMessage[]>(
-    'echo_slow_messages_v1',
-    [
+  const initialSlowMessages: SlowMessage[] = useMemo(
+    () => [
       {
         id: 'msg-initial-1',
         fromUserId: 'user-ren',
@@ -82,12 +90,21 @@ export const EchoProvider: React.FC<{ children: React.ReactNode }> = ({ children
         readAt: null,
         expiresAt: null,
       },
-    ]
+    ],
+    []
   );
 
-  // Daily prompt rotation
+  const [slowMessages, setSlowMessages] = useLocalStorage<SlowMessage[]>(
+    'echo_slow_messages_v1',
+    initialSlowMessages,
+    validateSlowMessagesArray
+  );
+
   const [promptIndex, setPromptIndex] = useLocalStorage<number>('echo_prompt_idx_v1', 0);
   const dailyPrompt = DAILY_PROMPTS[promptIndex % DAILY_PROMPTS.length];
+
+  // Audio State
+  const [audioMutedState, setAudioMutedState] = useState<boolean>(isAudioMuted());
 
   // UI state
   const [activeMoodFilter, setActiveMoodFilter] = useState<MoodType | 'all'>('all');
@@ -110,10 +127,16 @@ export const EchoProvider: React.FC<{ children: React.ReactNode }> = ({ children
           return true;
         })
       );
-    }, 2000);
+    }, 1500);
 
     return () => clearInterval(timer);
   }, [setSlowMessages]);
+
+  const toggleAudio = useCallback((): boolean => {
+    const nextState = toggleAudioMuted();
+    setAudioMutedState(nextState);
+    return nextState;
+  }, []);
 
   const hasResonated = useCallback(
     (momentId: string): boolean => {
@@ -163,7 +186,6 @@ export const EchoProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return { isMutual: Boolean(mutualResonances[momentId]) };
       }
 
-      // Record user resonance privately
       setUserResonances((prev) => ({ ...prev, [momentId]: true }));
 
       const moment = moments.find((m) => m.id === momentId);
@@ -171,17 +193,13 @@ export const EchoProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return { isMutual: false };
       }
 
-      // Check if this moment is seeded for mutual connection
       const author = SEED_USERS[moment.authorId];
       const isSecretMutual =
         SECRET_MUTUAL_MOMENT_IDS.includes(momentId) ||
         (author && constellation.length < CONSTELLATION_CAP && Math.random() < 0.35);
 
       if (isSecretMutual && author) {
-        // Record mutual resonance
         setMutualResonances((prev) => ({ ...prev, [momentId]: true }));
-
-        // Check if author is already in constellation
         const alreadyConnected = constellation.some((c) => c.userId === author.id);
 
         if (!alreadyConnected && constellation.length < CONSTELLATION_CAP) {
@@ -198,10 +216,7 @@ export const EchoProvider: React.FC<{ children: React.ReactNode }> = ({ children
             return [...prev, newEntry];
           });
 
-          // Play warm harmonic chime sound
           playHarmonicChime();
-
-          // Trigger mutual match modal event
           setMutualMatchEvent({ moment, user: author });
 
           return { isMutual: true, connectionUser: author };
@@ -265,7 +280,6 @@ export const EchoProvider: React.FC<{ children: React.ReactNode }> = ({ children
     [setSlowMessages]
   );
 
-  // Remove / unfurl a connection gently from constellation
   const removeConstellationEntry = useCallback(
     (userId: string) => {
       setConstellation((prev) => prev.filter((entry) => entry.userId !== userId));
@@ -281,14 +295,44 @@ export const EchoProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setPromptIndex((prev) => (prev + 1) % DAILY_PROMPTS.length);
   }, [setPromptIndex]);
 
+  const fillConstellationToCap = useCallback(() => {
+    const existingIds = new Set(constellation.map((c) => c.userId));
+    const candidateUsers = Object.values(SEED_USERS).filter(
+      (u) => !existingIds.has(u.id) && u.id !== CURRENT_USER.id
+    );
+
+    const needed = CONSTELLATION_CAP - constellation.length;
+    if (needed <= 0) return;
+
+    const newEntries: ConstellationEntry[] = candidateUsers.slice(0, needed).map((user, i) => {
+      const randomMoment = moments[i % moments.length];
+      return {
+        id: `constellation-${user.id}-${Date.now() + i}`,
+        userId: user.id,
+        connectedAt: Date.now() - (i + 1) * 1000 * 60 * 60 * 24,
+        resonanceMomentId: randomMoment ? randomMoment.id : 'moment-1',
+        user,
+      };
+    });
+
+    setConstellation((prev) => [...prev, ...newEntries]);
+  }, [constellation, moments, setConstellation]);
+
+  const triggerMutualRevealDemo = useCallback(() => {
+    const elenaMoment = moments.find((m) => m.id === 'moment-1') || moments[0];
+    setSelectedMoment(elenaMoment);
+    resonate(elenaMoment.id);
+  }, [moments, resonate]);
+
   const resetToDefaults = useCallback(() => {
     setMoments(SEED_MOMENTS);
     setUserResonances({});
     setMutualResonances({});
     setConstellation(initialConstellation);
-    setSlowMessages([]);
+    setSlowMessages(initialSlowMessages);
     setPromptIndex(0);
     setSelectedMoment(null);
+    setMutualMatchEvent(null);
   }, [
     setMoments,
     setUserResonances,
@@ -297,6 +341,7 @@ export const EchoProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setSlowMessages,
     setPromptIndex,
     initialConstellation,
+    initialSlowMessages,
   ]);
 
   return (
@@ -317,6 +362,7 @@ export const EchoProvider: React.FC<{ children: React.ReactNode }> = ({ children
         isSlowThreadsOpen,
         activeThreadUser,
         mutualMatchEvent,
+        audioMuted: audioMutedState,
         castMoment,
         resonate,
         hasResonated,
@@ -333,6 +379,9 @@ export const EchoProvider: React.FC<{ children: React.ReactNode }> = ({ children
         dismissMutualMatch,
         rotatePrompt,
         resetToDefaults,
+        fillConstellationToCap,
+        triggerMutualRevealDemo,
+        toggleAudio,
       }}
     >
       {children}

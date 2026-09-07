@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { X, Sparkles, Clock, Compass } from 'lucide-react';
 import { Moment, MOOD_DEFINITIONS } from '../../types';
 import { useEcho } from '../../hooks/useEcho';
+import { useFocusTrap } from '../../hooks/useFocusTrap';
 import { AbstractAvatar } from '../../components/AbstractAvatar';
 import { ResonanceGlyph } from '../../components/ResonanceGlyph';
 
@@ -14,6 +15,7 @@ export const MomentFloatingCard: React.FC<MomentFloatingCardProps> = ({
   moment,
   onClose,
 }) => {
+  const modalRef = useFocusTrap<HTMLDivElement>(true);
   const { users, currentUser, resonate, hasResonated, isMutual } = useEcho();
   const [pulseActive, setPulseActive] = useState(false);
 
@@ -68,10 +70,12 @@ export const MomentFloatingCard: React.FC<MomentFloatingCardProps> = ({
 
   return (
     <div
+      ref={modalRef}
       role="dialog"
       aria-modal="true"
       aria-label={`Moment by ${author.displayName}`}
-      className="relative w-full max-w-2xl mx-auto p-8 sm:p-12 rounded-[2.5rem] bg-cream-50/95 border border-resonance-400/60 shadow-2xl backdrop-blur-2xl transition-all duration-500 animate-in fade-in zoom-in-95"
+      tabIndex={-1}
+      className="relative w-full max-w-2xl mx-auto p-8 sm:p-12 rounded-[2.5rem] bg-cream-50/95 border border-resonance-400/60 shadow-2xl backdrop-blur-2xl transition-all duration-500 animate-in fade-in zoom-in-95 focus:outline-none"
     >
       {/* Background Soft Organic Grain & Light Leak */}
       <div
