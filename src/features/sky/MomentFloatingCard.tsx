@@ -57,7 +57,7 @@ export const MomentFloatingCard: React.FC<MomentFloatingCardProps> = ({
     <div
       role="dialog"
       aria-modal="true"
-      aria-labelledby="moment-card-author"
+      aria-label={`Moment by ${author.displayName}`}
       className="relative w-full max-w-lg mx-auto p-6 sm:p-7 rounded-3xl parchment-glass border border-resonance-400/50 shadow-parchment-elevated backdrop-blur-xl transition-all duration-300 animate-in fade-in zoom-in-95"
     >
       {/* Soft warm ambient corner light */}
