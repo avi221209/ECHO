@@ -1,8 +1,10 @@
 import React from 'react';
+import { EchoProvider } from './context/EchoContext';
 
 export const App: React.FC = () => {
   return (
-    <div className="relative min-h-screen bg-cream-100 flex flex-col font-sans selection:bg-resonance-200">
+    <EchoProvider>
+      <div className="relative min-h-screen bg-cream-100 flex flex-col font-sans selection:bg-resonance-200">
       {/* Soft atmospheric background lights */}
       <div
         className="pointer-events-none fixed inset-0 overflow-hidden"
@@ -46,6 +48,7 @@ export const App: React.FC = () => {
         </p>
       </main>
     </div>
+    </EchoProvider>
   );
 };
 
