@@ -3,6 +3,7 @@ import { EchoProvider } from './context/EchoContext';
 import { Header } from './components/Header';
 import { SkyCanvas } from './features/sky/SkyCanvas';
 import { CastMomentModal } from './features/cast/CastMomentModal';
+import { MutualRevealModal } from './features/resonance/MutualRevealModal';
 
 const MainAppContent: React.FC = () => {
   const [currentView, setCurrentView] = useState<'sky' | 'constellation'>('sky');
@@ -34,6 +35,9 @@ const MainAppContent: React.FC = () => {
 
       {/* Casting Flow Modal */}
       <CastMomentModal />
+
+      {/* Mutual Match Resonance Reveal */}
+      <MutualRevealModal onOpenConstellation={() => setCurrentView('constellation')} />
     </div>
   );
 };
