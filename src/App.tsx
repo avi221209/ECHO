@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { EchoProvider } from './context/EchoContext';
 import { Header } from './components/Header';
 import { SkyCanvas } from './features/sky/SkyCanvas';
+import { CastMomentModal } from './features/cast/CastMomentModal';
 
 const MainAppContent: React.FC = () => {
   const [currentView, setCurrentView] = useState<'sky' | 'constellation'>('sky');
@@ -30,6 +31,9 @@ const MainAppContent: React.FC = () => {
           </div>
         )}
       </main>
+
+      {/* Casting Flow Modal */}
+      <CastMomentModal />
     </div>
   );
 };
