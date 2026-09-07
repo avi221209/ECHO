@@ -5,6 +5,7 @@
 @layer base {
   :root {
     --color-cream-100: #FAF6EF;
+    --color-cream-200: #F4ECE0;
     --color-resonance: #D4A857;
     --color-ambient: #8B8FA3;
     --color-ink-900: #23201C;
@@ -17,44 +18,95 @@
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 
-  /* Accessible focus indicators for keyboard navigation */
+  /* Accessible and subtle focus ring for keyboard navigation */
   :focus-visible {
     outline: 2px solid #D4A857;
     outline-offset: 3px;
-    border-radius: 4px;
+    border-radius: 6px;
   }
 }
 
 @layer utilities {
   /* Ambient Morning Light glow */
   .glow-resonance {
-    box-shadow: 0 0 30px rgba(212, 168, 87, 0.28), 0 0 10px rgba(212, 168, 87, 0.18);
+    box-shadow: 0 0 35px rgba(212, 168, 87, 0.3), 0 0 12px rgba(212, 168, 87, 0.2);
   }
 
   .glow-ambient {
-    box-shadow: 0 0 24px rgba(139, 143, 163, 0.2), 0 0 8px rgba(139, 143, 163, 0.12);
+    box-shadow: 0 0 28px rgba(139, 143, 163, 0.22), 0 0 8px rgba(139, 143, 163, 0.14);
   }
 
-  /* Parchment glass effect */
+  /* Tactile parchment and paper material */
   .parchment-glass {
-    background: rgba(250, 246, 239, 0.88);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(212, 168, 87, 0.18);
+    background: rgba(250, 246, 239, 0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(212, 168, 87, 0.22);
+  }
+
+  .paper-surface {
+    background-color: #FAF6EF;
+    background-image: radial-gradient(#D4A857 0.5px, transparent 0.5px);
+    background-size: 16px 16px;
   }
 
   .card-shadow {
-    box-shadow: 0 10px 30px -4px rgba(45, 40, 32, 0.06), 0 4px 12px -2px rgba(45, 40, 32, 0.03);
+    box-shadow: 0 12px 36px -6px rgba(45, 40, 32, 0.07), 0 4px 14px -2px rgba(45, 40, 32, 0.03);
+  }
+
+  /* Dissolving mist animation for Slow Threads */
+  .dissolve-mist {
+    animation: dissolveMist 45s linear forwards;
+  }
+
+  @keyframes dissolveMist {
+    0% {
+      opacity: 1;
+      filter: blur(0px);
+    }
+    70% {
+      opacity: 0.9;
+      filter: blur(0.3px);
+    }
+    90% {
+      opacity: 0.5;
+      filter: blur(1.5px);
+    }
+    100% {
+      opacity: 0;
+      filter: blur(5px);
+      transform: translateY(-4px);
+    }
+  }
+
+  /* Gentle pulse for living resonance waves */
+  .pulse-wave {
+    animation: pulseWave 3s ease-in-out infinite;
+  }
+
+  @keyframes pulseWave {
+    0% {
+      transform: scale(0.96);
+      opacity: 0.4;
+    }
+    50% {
+      transform: scale(1.08);
+      opacity: 0.85;
+    }
+    100% {
+      transform: scale(0.96);
+      opacity: 0.4;
+    }
   }
 }
 
 /* Custom discreet scrollbars */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: #FAF6EF;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
   background: #DFCDAE;
@@ -62,4 +114,16 @@
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #D4A857;
+}
+
+/* Respect user's reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

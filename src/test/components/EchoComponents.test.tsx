@@ -103,7 +103,7 @@ describe('ECHO Components & Accessibility', () => {
       );
 
       // Since isCastOpen is initially false, modal is not visible initially
-      expect(screen.queryByRole('dialog', { name: /Cast into the Stillness/i })).not.toBeInTheDocument();
+      expect(screen.queryByRole('dialog', { name: /Cast/i })).not.toBeInTheDocument();
     });
   });
 });

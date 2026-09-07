@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, MessageCircle, Compass, X } from 'lucide-react';
+import { Mail, Compass, X } from 'lucide-react';
 import { useEcho } from '../../hooks/useEcho';
 import { AbstractAvatar } from '../../components/AbstractAvatar';
+import { ResonanceGlyph } from '../../components/ResonanceGlyph';
 import { CONSTELLATION_CAP } from '../../types';
 
 interface MutualRevealModalProps {
@@ -20,6 +21,30 @@ export const MutualRevealModal: React.FC<MutualRevealModalProps> = ({
     setActiveThreadUser,
     setIsSlowThreadsOpen,
   } = useEcho();
+
+  const [phase, setPhase] = useState<'converging' | 'synchronized' | 'revealed'>('converging');
+
+  useEffect(() => {
+    if (!mutualMatchEvent) {
+      setPhase('converging');
+      return;
+    }
+
+    // Step 1: Pulses converge (0 to 1.2s)
+    const t1 = setTimeout(() => {
+      setPhase('synchronized');
+    }, 1200);
+
+    // Step 2: Harmonized revelation (2.0s+)
+    const t2 = setTimeout(() => {
+      setPhase('revealed');
+    }, 2000);
+
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
+  }, [mutualMatchEvent]);
 
   // Close on Escape key
   useEffect(() => {
@@ -54,169 +79,169 @@ export const MutualRevealModal: React.FC<MutualRevealModalProps> = ({
       <div
         role="dialog"
         aria-modal="true"
-        aria-labelledby="mutual-reveal-title"
+        aria-labelledby="mutual-hero-title"
         aria-live="polite"
-        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-cream-950/30 backdrop-blur-md overflow-y-auto"
+        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-cream-950/45 backdrop-blur-xl overflow-y-auto"
       >
-        {/* Luminous expanding ripple rings */}
+        {/* Living Resonant Pulse Field across the sky */}
         <div
           className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden"
           aria-hidden="true"
         >
+          {/* Wave 1: From left */}
           <motion.div
-            initial={{ scale: 0.2, opacity: 0.8 }}
-            animate={{ scale: [0.2, 1.8, 3.2], opacity: [0.7, 0.4, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: 'easeOut' }}
-            className="w-96 h-96 rounded-full border border-resonance-400/40 bg-resonance-200/10"
+            initial={{ x: '-40vw', scale: 0.4, opacity: 0.8 }}
+            animate={{ x: 0, scale: [0.6, 1.8, 2.8], opacity: [0.8, 0.4, 0] }}
+            transition={{ duration: 3.5, repeat: Infinity, ease: 'easeOut' }}
+            className="w-80 h-80 rounded-full border-2 border-resonance-400/40 bg-resonance-200/10"
           />
+          {/* Wave 2: From right */}
           <motion.div
-            initial={{ scale: 0.2, opacity: 0.8 }}
-            animate={{ scale: [0.2, 1.8, 3.2], opacity: [0.7, 0.4, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: 'easeOut', delay: 1.2 }}
-            className="w-96 h-96 rounded-full border border-resonance-500/30 bg-resonance-100/15"
+            initial={{ x: '40vw', scale: 0.4, opacity: 0.8 }}
+            animate={{ x: 0, scale: [0.6, 1.8, 2.8], opacity: [0.8, 0.4, 0] }}
+            transition={{ duration: 3.5, repeat: Infinity, ease: 'easeOut', delay: 0.3 }}
+            className="w-80 h-80 rounded-full border-2 border-resonance-500/40 bg-resonance-100/15"
           />
-          <div className="absolute w-[600px] h-[600px] rounded-full bg-resonance-100/50 blur-3xl" />
+          {/* Golden ambient center stillness */}
+          <div className="absolute w-[650px] h-[650px] rounded-full bg-resonance-100/40 blur-3xl" />
         </div>
 
-        {/* Modal Card Content */}
+        {/* The Hero Revelation Chamber */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9, y: 20 }}
+          initial={{ opacity: 0, scale: 0.92, y: 15 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: -10 }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="relative w-full max-w-xl mx-auto rounded-3xl parchment-glass border-2 border-resonance-400/70 shadow-2xl p-6 sm:p-10 z-10 text-center overflow-hidden"
+          exit={{ opacity: 0, scale: 0.95 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="relative w-full max-w-xl mx-auto rounded-[2.5rem] bg-cream-50/95 border-2 border-resonance-400/80 shadow-2xl p-7 sm:p-12 z-10 text-center overflow-hidden"
         >
           {/* Dismiss button */}
           <button
             type="button"
             onClick={dismissMutualMatch}
-            className="absolute top-5 right-5 p-2 text-ink-400 hover:text-ink-800 hover:bg-resonance-100/60 rounded-full transition-colors z-20"
-            aria-label="Dismiss mutual match reveal"
+            className="absolute top-6 right-6 p-2 text-ink-500 hover:text-ink-900 hover:bg-resonance-100/80 rounded-full transition-colors z-20"
+            aria-label="Dismiss mutual reveal"
           >
             <X className="w-5 h-5" />
           </button>
 
-          {/* Reveal Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-resonance-100 text-resonance-800 border border-resonance-300/80 text-xs font-semibold uppercase tracking-widest mb-6 shadow-sm"
-          >
-            <Sparkles className="w-3.5 h-3.5 text-resonance-600" />
-            <span>Mutual Resonance Unveiled</span>
-          </motion.div>
-
-          {/* Harmonizing Avatars Alignment */}
-          <div className="relative flex items-center justify-center my-6">
-            {/* Ambient connecting resonant thread */}
+          {/* Harmonic Convergence Avatars */}
+          <div className="relative flex items-center justify-center my-6 h-28">
+            {/* Resonant Connecting Beam */}
             <motion.div
               initial={{ width: 0, opacity: 0 }}
-              animate={{ width: 140, opacity: 1 }}
-              transition={{ delay: 0.4, duration: 1 }}
-              className="absolute h-0.5 bg-gradient-to-r from-resonance-400 via-resonance-500 to-resonance-400 shadow-sm"
+              animate={{
+                width: phase === 'converging' ? 90 : 160,
+                opacity: 1,
+              }}
+              transition={{ duration: 0.8 }}
+              className="absolute h-0.5 bg-gradient-to-r from-resonance-400 via-resonance-500 to-resonance-400"
             >
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-resonance-500 animate-ping" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-resonance-500 animate-ping" />
             </motion.div>
 
             {/* Current User avatar drifting in from left */}
             <motion.div
-              initial={{ x: -60, opacity: 0 }}
-              animate={{ x: -45, opacity: 1 }}
-              transition={{ delay: 0.3, duration: 0.7, ease: 'easeOut' }}
+              initial={{ x: -100, opacity: 0 }}
+              animate={{
+                x: phase === 'converging' ? -55 : -48,
+                opacity: 1,
+              }}
+              transition={{ duration: 1, ease: 'easeOut' }}
               className="relative z-10 flex flex-col items-center"
             >
-              <div className="p-1 rounded-full bg-cream-50 shadow-light-soft border-2 border-resonance-300">
+              <div className="p-1.5 rounded-full bg-cream-50 shadow-light-soft border-2 border-resonance-300">
                 <AbstractAvatar seed={currentUser.avatarSeed} size={58} glow />
               </div>
-              <span className="text-xs font-medium text-ink-800 mt-2">You</span>
+              <span className="text-xs font-serif font-medium text-ink-800 mt-2">You</span>
             </motion.div>
+
+            {/* Harmonic Center Glyphs */}
+            <div className="relative z-20 mx-3">
+              <ResonanceGlyph size={28} mutual pulsing={phase !== 'revealed'} />
+            </div>
 
             {/* Connected User avatar drifting in from right */}
             <motion.div
-              initial={{ x: 60, opacity: 0 }}
-              animate={{ x: 45, opacity: 1 }}
-              transition={{ delay: 0.3, duration: 0.7, ease: 'easeOut' }}
+              initial={{ x: 100, opacity: 0 }}
+              animate={{
+                x: phase === 'converging' ? 55 : 48,
+                opacity: 1,
+              }}
+              transition={{ duration: 1, ease: 'easeOut' }}
               className="relative z-10 flex flex-col items-center"
             >
-              <div className="p-1 rounded-full bg-cream-50 shadow-light-glow border-2 border-resonance-500">
+              <div className="p-1.5 rounded-full bg-cream-50 shadow-light-glow border-2 border-resonance-500">
                 <AbstractAvatar seed={user.avatarSeed} size={58} glow />
               </div>
-              <span className="text-xs font-medium text-ink-800 mt-2">
+              <span className="text-xs font-serif font-medium text-ink-800 mt-2">
                 {user.displayName}
               </span>
             </motion.div>
           </div>
 
-          {/* Emotional Statement */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            className="space-y-3 mb-6"
-          >
+          {/* Hero Poetic Revelation Statements */}
+          <div className="space-y-2 mb-8">
+            <motion.span
+              initial={{ opacity: 0, y: -5 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-[11px] font-semibold uppercase tracking-widest text-resonance-800 bg-resonance-100/90 px-3.5 py-1 rounded-full border border-resonance-300/80 inline-block mb-2"
+            >
+              Mutual Attunement
+            </motion.span>
+
             <h2
-              id="mutual-reveal-title"
+              id="mutual-hero-title"
               className="font-serif text-3xl sm:text-4xl font-light text-ink-900 leading-tight"
             >
-              Two quiet paths aligned.
+              Something here answered back.
             </h2>
-            <p className="text-sm sm:text-base text-ink-600 font-light max-w-md mx-auto leading-relaxed">
-              Neither of you knew until now. In a world of broadcasts, you found each other
-              through unspoken resonance.
-            </p>
-          </motion.div>
 
-          {/* The Catalyst Moment Card */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.6 }}
-            className="p-4 sm:p-5 rounded-2xl bg-cream-50/90 border border-resonance-300/60 shadow-inner text-left mb-6"
-          >
-            <span className="text-[10px] font-semibold uppercase tracking-widest text-resonance-700 block mb-1">
-              Resonated Moment
-            </span>
-            <p className="font-serif text-base sm:text-lg italic text-ink-800 leading-snug">
-              “{moment.text}”
+            <p className="font-serif text-lg sm:text-xl text-resonance-800 italic font-normal">
+              Your resonance is mutual.
             </p>
-          </motion.div>
 
-          {/* Constellation Cap Progress & Status */}
-          <div className="text-xs text-ink-500 mb-8">
-            <span className="font-medium text-resonance-800">{user.displayName}</span> is now
-            woven into your Constellation (
-            <span className="font-semibold text-ink-900">
-              {constellation.length} of {CONSTELLATION_CAP} connections
-            </span>
-            ).
+            <p className="text-xs sm:text-sm text-ink-600 font-light max-w-md mx-auto leading-relaxed pt-2">
+              Neither of you was performing for an audience. In the quiet, you both attuned
+              to the same frequency.
+            </p>
           </div>
 
+          {/* The Catalyst Thought */}
+          <div className="p-5 rounded-2xl bg-cream-100/80 border border-resonance-300/60 shadow-inner text-left mb-6">
+            <span className="text-[10px] font-semibold uppercase tracking-wider text-resonance-700 block mb-1">
+              The Shared Catalyst
+            </span>
+            <p className="font-serif text-base sm:text-lg italic text-ink-900 leading-relaxed">
+              “{moment.text}”
+            </p>
+          </div>
+
+          {/* Constellation Progress */}
+          <p className="text-xs text-ink-600 font-light mb-8">
+            <span className="font-medium text-ink-900">{user.displayName}</span> is now
+            woven into your Constellation ({constellation.length} of {CONSTELLATION_CAP} connections).
+          </p>
+
           {/* Actions */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.7 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-3"
-          >
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <button
               type="button"
               onClick={handleOpenThread}
-              className="w-full sm:w-auto px-6 py-2.5 rounded-full text-xs font-medium text-cream-50 bg-resonance-500 hover:bg-resonance-600 shadow-light-soft hover:shadow-light-glow transition-all flex items-center justify-center space-x-2"
+              className="w-full sm:w-auto px-7 py-3 rounded-full text-xs font-semibold text-cream-50 bg-resonance-500 hover:bg-resonance-600 shadow-light-soft hover:shadow-light-glow transition-all flex items-center justify-center space-x-2"
             >
-              <MessageCircle className="w-4 h-4" />
+              <Mail className="w-4 h-4" />
               <span>Send a Slow Letter</span>
             </button>
 
             <button
               type="button"
               onClick={handleGoConstellation}
-              className="w-full sm:w-auto px-6 py-2.5 rounded-full text-xs font-medium text-ink-700 hover:text-ink-900 bg-cream-50 hover:bg-resonance-100 rounded-full border border-resonance-300/80 transition-colors flex items-center justify-center space-x-2"
+              className="w-full sm:w-auto px-6 py-3 rounded-full text-xs font-medium text-ink-700 hover:text-ink-900 bg-cream-100 hover:bg-resonance-100/60 rounded-full border border-resonance-300 transition-colors flex items-center justify-center space-x-2"
             >
               <Compass className="w-4 h-4" />
-              <span>View in Constellation</span>
+              <span>Follow the Thread in Constellation</span>
             </button>
-          </motion.div>
+          </div>
         </motion.div>
       </div>
     </AnimatePresence>
