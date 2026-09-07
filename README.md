@@ -28,37 +28,45 @@ Every interaction in ECHO is designed around a singular question:
 
 ## ✨ Core Features
 
-### 1. The Sky (Ambient Home Canvas)
-- **Spatial Exploration**: Moments float organically across the viewport using Framer Motion with multi-axis easing and unique per-element floating durations (18s–32s).
-- **Morning Light Dust Motes**: Soft translucent circular lights that breathe and react to touch and keyboard focus.
+### 1. The Sky (Living Light Field)
+- **Ambient Light Field**: Moments are rendered not as flat circles, but as layered translucent elliptical glows with subtle particle drift and deterministic behavior based on their unique ID (drift direction, speed, scale, opacity, orbit tendency).
+- **Resonance Distance Physics**: Moments respond to pointer proximity with gentle physical repulsion and attraction, communicating social proximity without displaying numbers, likes, or counters.
+- **Attunement Interaction**: Replaces click-to-open with a gradual attunement progression (pointer approach → clarity → moment text legible → author identity manifests → secondary actions emerge).
 - **Shared Daily Prompt**: An ambient anchor banner at the top (e.g., *"What stillness did you encounter before the world woke up?"*) that can be gently whispered or rotated.
 - **Spectrum Mood Filter**: Filter moments across five human moods (`Reflective`, `Joyful`, `Uncertain`, `Grateful`, `Restless`) without leaving the canvas.
 
-### 2. Casting a Moment
+### 2. Casting a Thought (Physical Release)
 - **Mindful Composing**: 180-character maximum with client-side sanitization preventing HTML injection.
-- **Tactile Mood Selector**: Interactive physical watercolor/linen swatches rather than generic form dropdowns.
-- **Visible Lifespan Horizon**: Previewing the 24-hour decay ring where moments softly fade in opacity as their lifespan matures.
+- **Tactile Mood Selector**: Interactive physical watercolor/linen swatches; the ambient environment subtly inherits the selected mood's hue.
+- **Physical Release Sequence**: The composition lifts from the card, compresses into a luminous parchment signal, travels into The Sky, and gently settles into its drifting coordinates.
 
-### 3. Resonance Mechanic & Mutual Reveal
-- **Private Heart Action**: Tapping "Resonate" is completely private. No visible counts are broadcast.
-- **The Mutual Match Reveal**: When mutual resonance occurs (pre-seeded with authors like Elena Vance, Mateo Morales, and Maya Lin), the app triggers an emotional, luminous celebration:
-  - Ambient golden light bloom and expanding water-ripple rings.
-  - Generative abstract avatars drift from the horizon to align into a resonant orbit.
-  - A real-time harmonic chord chime synthesized via the **Web Audio API**.
-  - Immediate invitation into the Constellation and Slow Threads.
+### 3. Resonance Mechanic & Hero Mutual Reveal
+- **Custom Resonance Glyph**: Replaces conventional heart/like icons with dual harmonic opposing arcs creating an acoustic field.
+- **Private Signal**: Resonating sends an invisible signal into the atmosphere with zero public counters.
+- **Hero State Transition**: When mutual resonance occurs, the interface enters a hushed, cinematic multi-phase sequence:
+  - Selected moment releases a warm pulse.
+  - A second pulse travels across the sky from the responding author.
+  - Both pulses converge, ambient particles align, and the two abstract avatars synchronize into orbit.
+  - Displays: *“Something here answered back.”* → *“Your resonance is mutual.”*
+  - Harmonic chord chime synthesized via the native **Web Audio API** (with silent fallback and `prefers-reduced-motion` compliance).
 
-### 4. Personal Constellation Graph (Strict 15 Cap)
-- **Interactive SVG Node-Graph**: Visualizes mutual connections orbiting around the user with glowing amber connecting threads (`#D4A857`).
-- **Connection Story**: Inspect any node to view which moment catalyzed your mutual resonance and how long you have walked together.
-- **Deliberate 15-Connection Completion State**: When at capacity (15), ECHO presents an intentional message:  
-  *“Fifteen souls held in quiet focus. Depth chosen over infinite expanse.”*
-- **Evaluator Tool**: Includes a one-click simulation button for hackathon evaluators to instantly experience the 15/15 cap state.
+### 4. Personal Constellation (Relationship Memory Field)
+- **Living Curved Threads**: Living undulating threads connecting each soul, with intensity reflecting connection maturity rather than popularity.
+- **Memory Narrative**: Selecting a connection highlights their thread and traces it back visually to the catalyst Moment that sparked the bond.
+- **Philosophical 15-Cap Experience**: When full, the outer perimeter illuminates into a completed orbital circle, displaying:  
+  *“Fifteen people can stay close here. Depth has a boundary.”*
 
-### 5. Slow Threads (Ephemeral Messaging)
-- Direct communication reserved exclusively for mutual Constellation connections.
-- **Ephemeral Mist Dissolution**: Incoming letters dissolve into memory **45 seconds** after being opened.
-- Includes a live dissolution countdown and soft blur fading as words return to quiet stillness.
-- Mindful 300-character letter length.
+### 5. Slow Threads (Letter Fragments on Paper)
+- Direct letters reserved exclusively for mutual Constellation connections.
+- **Visual Ink Dissolution**: Incoming letters dissolve into memory **45 seconds** after being opened. The timer is communicated visually through opacity, soft blur, and ink dispersion rather than a noisy countdown badge.
+- Leaves a gentle memory trace: *“That moment has passed into memory.”*
+
+### 6. Evaluator Quick Suite (`Ctrl + Shift + E`)
+- A discreet testing dashboard for hackathon evaluators to test complex states instantly:
+  - Trigger Mutual Resonance Reveal with Elena Vance
+  - Simulate Full Constellation (15/15)
+  - Trigger Dissolving Letter Demo
+  - Reset to Seed Prototype State
 
 ---
 
