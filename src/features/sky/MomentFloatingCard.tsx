@@ -56,8 +56,9 @@ export const MomentFloatingCard: React.FC<MomentFloatingCardProps> = ({
   return (
     <div
       role="dialog"
-      aria-label={`Moment by ${author.displayName}`}
-      className="relative w-full max-w-lg mx-auto p-6 sm:p-7 rounded-3xl parchment-glass border border-resonance-300/40 shadow-parchment-elevated backdrop-blur-xl transition-all duration-300 animate-in fade-in zoom-in-95"
+      aria-modal="true"
+      aria-labelledby="moment-card-author"
+      className="relative w-full max-w-lg mx-auto p-6 sm:p-7 rounded-3xl parchment-glass border border-resonance-400/50 shadow-parchment-elevated backdrop-blur-xl transition-all duration-300 animate-in fade-in zoom-in-95"
     >
       {/* Soft warm ambient corner light */}
       <div
@@ -70,28 +71,31 @@ export const MomentFloatingCard: React.FC<MomentFloatingCardProps> = ({
         <div className="flex items-center space-x-3">
           <AbstractAvatar
             seed={author.avatarSeed}
-            size={42}
+            size={44}
             glow={mutual}
-            className="border border-resonance-300/40"
+            className="border border-resonance-400/40"
           />
           <div>
             <div className="flex items-center space-x-2">
-              <span className="font-medium text-ink-900 text-sm">
+              <span
+                id="moment-card-author"
+                className="font-medium text-ink-900 text-sm"
+              >
                 {author.displayName}
               </span>
               {isOwn && (
-                <span className="text-[10px] font-semibold uppercase tracking-wider text-resonance-700 bg-resonance-100 px-2 py-0.5 rounded-full border border-resonance-200">
+                <span className="text-[10px] font-semibold uppercase tracking-wider text-resonance-900 bg-resonance-100 px-2 py-0.5 rounded-full border border-resonance-300">
                   You
                 </span>
               )}
               {mutual && (
-                <span className="text-[10px] font-semibold uppercase tracking-wider text-resonance-800 bg-resonance-200/80 px-2 py-0.5 rounded-full border border-resonance-400 flex items-center space-x-1">
-                  <Sparkles className="w-2.5 h-2.5 inline mr-0.5 text-resonance-700" />
+                <span className="text-[10px] font-semibold uppercase tracking-wider text-resonance-900 bg-resonance-200/90 px-2 py-0.5 rounded-full border border-resonance-400 flex items-center space-x-1">
+                  <Sparkles className="w-2.5 h-2.5 inline mr-0.5 text-resonance-800" />
                   <span>Mutual Connection</span>
                 </span>
               )}
             </div>
-            <p className="text-xs text-ink-500 font-light truncate max-w-[220px]">
+            <p className="text-xs text-ink-700 font-normal truncate max-w-[220px] mt-0.5">
               {author.bio}
             </p>
           </div>
@@ -100,7 +104,7 @@ export const MomentFloatingCard: React.FC<MomentFloatingCardProps> = ({
         <button
           type="button"
           onClick={onClose}
-          className="p-1.5 text-ink-500 hover:text-ink-900 hover:bg-resonance-100/60 rounded-full transition-colors"
+          className="p-1.5 text-ink-600 hover:text-ink-900 hover:bg-resonance-100/80 rounded-full transition-colors"
           aria-label="Close moment card"
         >
           <X className="w-5 h-5" />
@@ -115,14 +119,14 @@ export const MomentFloatingCard: React.FC<MomentFloatingCardProps> = ({
       </div>
 
       {/* Meta details: Mood badge and Lifespan */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-resonance-200/50 text-xs text-ink-600">
+      <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-resonance-200/60 text-xs text-ink-700">
         <div className="flex items-center space-x-3">
           <span
-            className="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium border"
+            className="inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold border"
             style={{
               backgroundColor: moodConfig.bgLight,
-              borderColor: `${moodConfig.color}40`,
-              color: moodConfig.dotColor,
+              borderColor: `${moodConfig.color}60`,
+              color: '#23201C',
             }}
           >
             <span
@@ -133,15 +137,15 @@ export const MomentFloatingCard: React.FC<MomentFloatingCardProps> = ({
             <span>{moodConfig.label}</span>
           </span>
 
-          <span className="flex items-center space-x-1 text-ink-500 text-[11px]">
-            <Clock className="w-3 h-3 text-resonance-500" />
+          <span className="flex items-center space-x-1 text-ink-700 text-[11px] font-medium">
+            <Clock className="w-3.5 h-3.5 text-resonance-700" />
             <span>{remainingHours}</span>
           </span>
         </div>
 
         {/* Spatial anchor coordinates tag */}
-        <span className="flex items-center space-x-1 text-[11px] text-ink-400">
-          <Compass className="w-3 h-3" />
+        <span className="flex items-center space-x-1 text-[11px] text-ink-700 font-medium">
+          <Compass className="w-3.5 h-3.5 text-resonance-700" />
           <span>
             {moment.position.x}°E · {moment.position.y}°N
           </span>
@@ -150,7 +154,7 @@ export const MomentFloatingCard: React.FC<MomentFloatingCardProps> = ({
 
       {/* Action area: Private Resonance */}
       <div className="mt-5 pt-4 flex items-center justify-between gap-3">
-        <p className="text-[11px] text-ink-500 font-light italic leading-tight">
+        <p className="text-[11px] text-ink-700 font-normal italic leading-tight">
           {isOwn
             ? 'Casting into the stillness. Others resonate silently.'
             : resonated
@@ -165,9 +169,9 @@ export const MomentFloatingCard: React.FC<MomentFloatingCardProps> = ({
             type="button"
             onClick={handleResonate}
             disabled={resonated}
-            className={`px-4 py-2 rounded-full text-xs font-medium transition-all duration-300 flex items-center space-x-2 shrink-0 ${
+            className={`px-4 py-2 rounded-full text-xs font-semibold transition-all duration-300 flex items-center space-x-2 shrink-0 ${
               resonated
-                ? 'bg-resonance-100 text-resonance-800 border border-resonance-300/80 cursor-default'
+                ? 'bg-resonance-100 text-resonance-900 border border-resonance-400 cursor-default'
                 : 'bg-resonance-500 hover:bg-resonance-600 text-cream-50 shadow-sm hover:shadow-light-glow'
             }`}
             aria-label={
@@ -179,7 +183,7 @@ export const MomentFloatingCard: React.FC<MomentFloatingCardProps> = ({
             <Heart
               className={`w-3.5 h-3.5 transition-transform duration-300 ${
                 resonated
-                  ? 'fill-resonance-500 text-resonance-600 scale-110'
+                  ? 'fill-resonance-600 text-resonance-700 scale-110'
                   : 'text-cream-50 group-hover:scale-110'
               }`}
             />
