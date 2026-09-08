@@ -30,7 +30,7 @@ Every interaction in ECHO is designed around a singular question:
 
 ### 1. The Sky (Ambient Spatial Field)
 - **Ambient Light Field**: Moments are rendered not as flat circles, but as layered translucent elliptical glows with subtle particle drift and deterministic behavior based on their unique ID (drift direction, speed, scale, opacity, orbit tendency).
-- **Resonance Distance Physics**: Moments respond to pointer proximity with gentle physical repulsion and attraction, communicating social proximity without displaying numbers, likes, or counters.
+- **Attunement Physics**: Moments respond to pointer proximity with gentle physical repulsion and attraction, communicating social proximity without displaying numbers, likes, or counters.
 - **Attunement Interaction**: Replaces click-to-open with a gradual attunement progression (pointer approach → clarity → moment text legible → author identity manifests → secondary actions emerge).
 - **Shared Daily Prompt**: An ambient anchor banner at the top (e.g., *"What stillness did you encounter before the world woke up?"*) that can be gently whispered or rotated.
 - **Spectrum Mood Filter**: Filter moments across five human moods (`Reflective`, `Joyful`, `Uncertain`, `Grateful`, `Restless`) without leaving the canvas.
@@ -56,7 +56,7 @@ Every interaction in ECHO is designed around a singular question:
 - **Philosophical 15-Cap Experience**: When full, the outer perimeter illuminates into a completed orbital circle, displaying:  
   *“Fifteen people can stay close here. Depth has a boundary.”*
 
-### 5. Slow Threads (Letter Fragments on Paper)
+### 5. Slow Threads (Dissolving Paper Letters)
 - Direct letters reserved exclusively for mutual Constellation connections.
 - **Visual Ink Dissolution**: Incoming letters dissolve into memory **45 seconds** after being opened. The timer is communicated visually through opacity, soft blur, and ink dispersion rather than a noisy countdown badge.
 - Leaves a gentle memory trace: *“That moment has passed into memory.”*

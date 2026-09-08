@@ -108,7 +108,7 @@ export const SkyCanvas: React.FC = () => {
       {/* Mood Spectrum Filter Pills */}
       <MoodFilterBar />
 
-      {/* Ambient Living Light Field Canvas */}
+      {/* Ambient The Sky Canvas */}
       <div className="relative flex-1 w-full h-full min-h-[520px]">
         {/* Atmospheric Light Field: Sunbeams, Gauze Curtains & Dust Particles */}
         <div
