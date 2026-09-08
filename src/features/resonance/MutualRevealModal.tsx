@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { Mail, Compass, X } from 'lucide-react';
 import { useEcho } from '../../hooks/useEcho';
 import { useFocusTrap } from '../../hooks/useFocusTrap';
@@ -91,14 +91,14 @@ export const MutualRevealModal: React.FC<MutualRevealModalProps> = ({
           aria-hidden="true"
         >
           {/* Wave 1: From left */}
-          <motion.div
+          <m.div
             initial={{ x: '-40vw', scale: 0.4, opacity: 0.8 }}
             animate={{ x: 0, scale: [0.6, 1.8, 2.8], opacity: [0.8, 0.4, 0] }}
             transition={{ duration: 3.5, repeat: Infinity, ease: 'easeOut' }}
             className="w-80 h-80 rounded-full border-2 border-resonance-400/40 bg-resonance-200/10"
           />
           {/* Wave 2: From right */}
-          <motion.div
+          <m.div
             initial={{ x: '40vw', scale: 0.4, opacity: 0.8 }}
             animate={{ x: 0, scale: [0.6, 1.8, 2.8], opacity: [0.8, 0.4, 0] }}
             transition={{ duration: 3.5, repeat: Infinity, ease: 'easeOut', delay: 0.3 }}
@@ -109,7 +109,7 @@ export const MutualRevealModal: React.FC<MutualRevealModalProps> = ({
         </div>
 
         {/* The Hero Revelation Chamber */}
-        <motion.div
+        <m.div
           ref={modalRef}
           tabIndex={-1}
           initial={{ opacity: 0, scale: 0.92, y: 15 }}
@@ -131,7 +131,7 @@ export const MutualRevealModal: React.FC<MutualRevealModalProps> = ({
           {/* Harmonic Convergence Avatars */}
           <div className="relative flex items-center justify-center my-6 h-28">
             {/* Resonant Connecting Beam */}
-            <motion.div
+            <m.div
               initial={{ width: 0, opacity: 0 }}
               animate={{
                 width: phase === 'converging' ? 90 : 160,
@@ -141,10 +141,10 @@ export const MutualRevealModal: React.FC<MutualRevealModalProps> = ({
               className="absolute h-0.5 bg-gradient-to-r from-resonance-400 via-resonance-500 to-resonance-400"
             >
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-resonance-500 animate-ping" />
-            </motion.div>
+            </m.div>
 
             {/* Current User avatar drifting in from left */}
-            <motion.div
+            <m.div
               initial={{ x: -100, opacity: 0 }}
               animate={{
                 x: phase === 'converging' ? -55 : -48,
@@ -157,7 +157,7 @@ export const MutualRevealModal: React.FC<MutualRevealModalProps> = ({
                 <AbstractAvatar seed={currentUser.avatarSeed} size={58} glow />
               </div>
               <span className="text-xs font-serif font-medium text-ink-800 mt-2">You</span>
-            </motion.div>
+            </m.div>
 
             {/* Harmonic Center Glyphs */}
             <div className="relative z-20 mx-3">
@@ -165,7 +165,7 @@ export const MutualRevealModal: React.FC<MutualRevealModalProps> = ({
             </div>
 
             {/* Connected User avatar drifting in from right */}
-            <motion.div
+            <m.div
               initial={{ x: 100, opacity: 0 }}
               animate={{
                 x: phase === 'converging' ? 55 : 48,
@@ -180,18 +180,18 @@ export const MutualRevealModal: React.FC<MutualRevealModalProps> = ({
               <span className="text-xs font-serif font-medium text-ink-800 mt-2">
                 {user.displayName}
               </span>
-            </motion.div>
+            </m.div>
           </div>
 
           {/* Hero Poetic Revelation Statements */}
           <div className="space-y-2 mb-8">
-            <motion.span
+            <m.span
               initial={{ opacity: 0, y: -5 }}
               animate={{ opacity: 1, y: 0 }}
               className="text-[11px] font-semibold uppercase tracking-widest text-resonance-800 bg-resonance-100/90 px-3.5 py-1 rounded-full border border-resonance-300/80 inline-block mb-2"
             >
               Mutual Resonance
-            </motion.span>
+            </m.span>
 
             <h2
               id="mutual-hero-title"
@@ -246,7 +246,7 @@ export const MutualRevealModal: React.FC<MutualRevealModalProps> = ({
               <span>Follow the Thread in Constellation</span>
             </button>
           </div>
-        </motion.div>
+        </m.div>
       </div>
     </AnimatePresence>
   );

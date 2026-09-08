@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { X, Feather, Clock } from 'lucide-react';
 import { MoodType, MOOD_DEFINITIONS } from '../../types';
 import { useEcho } from '../../hooks/useEcho';
@@ -89,7 +89,7 @@ export const CastMomentModal: React.FC = () => {
 
       {/* The Physical Composition Sheet */}
       <AnimatePresence>
-        <motion.div
+        <m.div
           ref={modalRef}
           tabIndex={-1}
           animate={
@@ -108,7 +108,7 @@ export const CastMomentModal: React.FC = () => {
         >
           {/* Luminous release particle beacon */}
           {isReleasing && (
-            <motion.div
+            <m.div
               initial={{ scale: 0.5, opacity: 0 }}
               animate={{ scale: [1, 2.5, 4], opacity: [0.9, 0.5, 0] }}
               transition={{ duration: 0.9, repeat: Infinity }}
@@ -288,7 +288,7 @@ export const CastMomentModal: React.FC = () => {
               </button>
             </div>
           </form>
-        </motion.div>
+        </m.div>
       </AnimatePresence>
     </div>
   );

@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Moment, MOOD_DEFINITIONS } from '../../types';
 import { useEcho } from '../../hooks/useEcho';
 import { AbstractAvatar } from '../../components/AbstractAvatar';
@@ -72,7 +72,7 @@ export const MomentLight: React.FC<MomentLightProps> = React.memo(
     };
 
     return (
-      <motion.div
+      <m.div
         className="absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer z-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-resonance-500 rounded-full p-1.5 group"
         style={{
           left: `${moment.position.x}%`,
@@ -187,7 +187,7 @@ export const MomentLight: React.FC<MomentLightProps> = React.memo(
             </div>
           </div>
         </div>
-      </motion.div>
+      </m.div>
     );
   }
 );

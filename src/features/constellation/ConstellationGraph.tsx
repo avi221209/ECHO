@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Sparkles, ShieldCheck } from 'lucide-react';
 import { useEcho } from '../../hooks/useEcho';
 import { ConstellationEntry, CONSTELLATION_CAP } from '../../types';
@@ -76,7 +76,7 @@ export const ConstellationGraph: React.FC = () => {
       {/* Top Cap & Harmony Status Banner */}
       <div className="relative z-20 w-full max-w-xl mx-auto text-center mb-2">
         {isAtCap ? (
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: -6 }}
             animate={{ opacity: 1, y: 0 }}
             className="p-5 rounded-[2rem] bg-resonance-100/80 border border-resonance-400/80 shadow-light-soft text-center mt-2"
@@ -95,7 +95,7 @@ export const ConstellationGraph: React.FC = () => {
               In ECHO, connection is preserved through sacred focus. Every soul orbiting here
               is held in presence without infinite feeds or crowd distraction.
             </p>
-          </motion.div>
+          </m.div>
         ) : (
           <div className="space-y-1">
             <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-cream-50/90 border border-resonance-300/60 shadow-xs backdrop-blur-md">

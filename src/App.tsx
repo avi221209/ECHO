@@ -1,4 +1,5 @@
 import React, { useState, Suspense, lazy } from 'react';
+import { LazyMotion, domAnimation } from 'framer-motion';
 import { EchoProvider } from './context/EchoContext';
 import { Header } from './components/Header';
 import { SkyCanvas } from './features/sky/SkyCanvas';
@@ -75,9 +76,11 @@ const MainAppContent: React.FC = () => {
 
 export const App: React.FC = () => {
   return (
-    <EchoProvider>
-      <MainAppContent />
-    </EchoProvider>
+    <LazyMotion features={domAnimation}>
+      <EchoProvider>
+        <MainAppContent />
+      </EchoProvider>
+    </LazyMotion>
   );
 };
 
