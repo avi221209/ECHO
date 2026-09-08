@@ -20,7 +20,7 @@ describe('ECHO Components & Accessibility', () => {
       );
 
       const skyRegion = screen.getByRole('region', {
-        name: /The Sky - Ambient Canvas of Drifting Moments/i,
+        name: /The Sky - Ambient Spatial Field/i,
       });
       expect(skyRegion).toBeInTheDocument();
     });

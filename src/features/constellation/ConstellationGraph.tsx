@@ -83,7 +83,7 @@ export const ConstellationGraph: React.FC = () => {
           >
             <div className="flex items-center justify-center space-x-2 text-xs font-semibold uppercase tracking-wider text-resonance-900 mb-1.5">
               <ShieldCheck className="w-4 h-4 text-resonance-700" />
-              <span>Your Circle is Full</span>
+              <span>Your Constellation Circle is Full</span>
             </div>
             <h2 className="font-serif text-2xl sm:text-3xl text-ink-900 font-light leading-snug">
               Fifteen people can stay close here.
@@ -101,9 +101,9 @@ export const ConstellationGraph: React.FC = () => {
             <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-cream-50/90 border border-resonance-300/60 shadow-xs backdrop-blur-md">
               <Sparkles className="w-3.5 h-3.5 text-resonance-600" />
               <span className="text-xs font-medium text-ink-800">
-                Living Memory Field:{' '}
+                Relationship Memory Field:{' '}
                 <span className="font-semibold text-resonance-800">
-                  {constellation.length} of {CONSTELLATION_CAP} Souls
+                  {constellation.length} of {CONSTELLATION_CAP} Connections
                 </span>
               </span>
             </div>
@@ -188,7 +188,7 @@ export const ConstellationGraph: React.FC = () => {
             </text>
           </g>
 
-          {/* Orbiting Satellite Souls */}
+          {/* Orbiting Constellation Connections */}
           {nodePositions.map(({ entry, x, y }) => {
             const isSelected = selectedEntry?.id === entry.id;
 

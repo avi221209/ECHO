@@ -190,7 +190,7 @@ export const MutualRevealModal: React.FC<MutualRevealModalProps> = ({
               animate={{ opacity: 1, y: 0 }}
               className="text-[11px] font-semibold uppercase tracking-widest text-resonance-800 bg-resonance-100/90 px-3.5 py-1 rounded-full border border-resonance-300/80 inline-block mb-2"
             >
-              Mutual Attunement
+              Mutual Resonance
             </motion.span>
 
             <h2
@@ -223,7 +223,7 @@ export const MutualRevealModal: React.FC<MutualRevealModalProps> = ({
           {/* Constellation Progress */}
           <p className="text-xs text-ink-600 font-light mb-8">
             <span className="font-medium text-ink-900">{user.displayName}</span> is now
-            woven into your Constellation ({constellation.length} of {CONSTELLATION_CAP} connections).
+            woven into your Constellation Circle ({constellation.length} of {CONSTELLATION_CAP} connections).
           </p>
 
           {/* Actions */}

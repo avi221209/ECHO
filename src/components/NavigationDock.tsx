@@ -69,16 +69,15 @@ export const NavigationDock: React.FC<NavigationDockProps> = ({
         </span>
       </button>
 
-      {/* View: Slow Threads (Ephemeral Letters) */}
+      {/* View: Slow Threads (Ephemeral Paper Letters) */}
       <button
         type="button"
         onClick={() => setIsSlowThreadsOpen(true)}
         className="relative px-3.5 sm:px-4 py-2 rounded-full text-xs font-medium text-ink-700 hover:text-ink-900 hover:bg-resonance-100/60 transition-all flex items-center space-x-2"
-        aria-label={`Open Slow Threads Letters${unreadCount > 0 ? `, ${unreadCount} unread` : ''}`}
+        aria-label={`Open Slow Threads${unreadCount > 0 ? `, ${unreadCount} unread` : ''}`}
       >
         <Mail className="w-3.5 h-3.5" />
-        <span className="tracking-wide hidden sm:inline">Slow Threads</span>
-        <span className="tracking-wide sm:hidden">Letters</span>
+        <span className="tracking-wide">Slow Threads</span>
         {unreadCount > 0 && (
           <span
             className="w-2 h-2 rounded-full bg-resonance-500 animate-ping absolute top-1.5 right-2"

@@ -182,7 +182,7 @@ export const MomentLight: React.FC<MomentLightProps> = React.memo(
               </div>
               <div className="flex items-center space-x-1 text-resonance-800 font-medium">
                 <ResonanceGlyph resonated={resonated} size={11} />
-                <span>{resonated ? 'Resonated' : 'Tune in'}</span>
+                <span>{resonated ? 'Resonated' : 'Attune'}</span>
               </div>
             </div>
           </div>

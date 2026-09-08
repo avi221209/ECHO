@@ -78,7 +78,7 @@ export const SkyCanvas: React.FC = () => {
     <div
       className="relative w-full flex-1 flex flex-col min-h-[calc(100vh-80px)] overflow-hidden select-none pb-24 sm:pb-28"
       role="region"
-      aria-label="The Sky - Ambient Canvas of Drifting Moments"
+      aria-label="The Sky - Ambient Spatial Field"
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
       onTouchMove={handleTouchMove}
@@ -91,16 +91,16 @@ export const SkyCanvas: React.FC = () => {
       <div className="w-full max-w-2xl mx-auto px-4 pt-1 pb-2">
         <div className="flex flex-wrap items-center justify-center gap-2 text-[11px] text-ink-700">
           <span className="inline-flex items-center space-x-1 px-3 py-1 rounded-full bg-cream-50/80 border border-resonance-300/50 shadow-xs backdrop-blur-sm">
-            <Compass className="w-3 h-3 text-resonance-600" />
-            <span className="font-medium">Spatial Field (No Feeds)</span>
+            <Compass className="w-3.3 h-3.3 text-resonance-600" />
+            <span className="font-medium">Ambient Spatial Field (No Feeds)</span>
           </span>
           <span className="inline-flex items-center space-x-1 px-3 py-1 rounded-full bg-cream-50/80 border border-resonance-300/50 shadow-xs backdrop-blur-sm">
-            <Sparkles className="w-3 h-3 text-resonance-600" />
+            <Sparkles className="w-3.3 h-3.3 text-resonance-600" />
             <span className="font-medium">Mutual Resonance (No Likes)</span>
           </span>
           <span className="inline-flex items-center space-x-1 px-3 py-1 rounded-full bg-cream-50/80 border border-resonance-300/50 shadow-xs backdrop-blur-sm">
-            <Shield className="w-3 h-3 text-resonance-600" />
-            <span className="font-medium">Finite Circle (Cap 15)</span>
+            <Shield className="w-3.3 h-3.3 text-resonance-600" />
+            <span className="font-medium">Constellation Circle (Cap 15)</span>
           </span>
         </div>
       </div>
@@ -173,7 +173,7 @@ export const SkyCanvas: React.FC = () => {
         <div className="flex items-center space-x-2.5">
           <span className="w-2 h-2 rounded-full bg-resonance-500 animate-pulse-subtle" />
           <span className="tracking-wide font-medium">
-            {filteredMoments.length} moments floating in stillness
+            {filteredMoments.length} drifting light motes in stillness
           </span>
         </div>
         <p className="text-ink-600 italic font-serif">

@@ -109,7 +109,7 @@ export const MomentFloatingCard: React.FC<MomentFloatingCardProps> = ({
               {mutual && (
                 <span className="text-[10px] font-semibold uppercase tracking-wider text-resonance-900 bg-resonance-200/90 px-2.5 py-0.5 rounded-full border border-resonance-400 flex items-center space-x-1">
                   <Sparkles className="w-2.5 h-2.5 text-resonance-800" />
-                  <span>Mutual Connection</span>
+                  <span>Mutual Resonance</span>
                 </span>
               )}
             </div>

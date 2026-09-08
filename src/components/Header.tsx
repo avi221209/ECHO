@@ -57,7 +57,7 @@ export const Header: React.FC<HeaderProps> = ({ currentView, onSelectView }) => 
             <Compass className="w-3.5 h-3.5 text-resonance-600" />
             <span className="font-medium text-ink-800">The Sky</span>
             <span className="text-resonance-400">·</span>
-            <span className="text-ink-500 font-light">Living Light Field</span>
+            <span className="text-ink-500 font-light">Ambient Spatial Field</span>
           </>
         ) : (
           <>
@@ -65,7 +65,7 @@ export const Header: React.FC<HeaderProps> = ({ currentView, onSelectView }) => 
             <span className="font-medium text-ink-800">Constellation</span>
             <span className="text-resonance-400">·</span>
             <span className="text-ink-500 font-light">
-              {constellation.length} Living Relationship Threads
+              {constellation.length} Living Connections
             </span>
           </>
         )}
@@ -172,7 +172,7 @@ export const Header: React.FC<HeaderProps> = ({ currentView, onSelectView }) => 
                   <span>3. How do I interact with another person?</span>
                 </h3>
                 <p>
-                  Hover or tap a light mote to attune. Click <em>“Resonate quietly”</em> to send a private signal. If both souls attune to each other, a <strong>Mutual Attunement Hero Moment</strong> reveals your connection and weaves a living thread into your Constellation.
+                  Hover or tap a light mote to attune. Click <em>“Resonate quietly”</em> to send a private signal. If both souls attune to each other, a <strong>Mutual Resonance Hero Moment</strong> reveals your connection and weaves a living thread into your Constellation.
                 </p>
               </div>
 
@@ -182,7 +182,7 @@ export const Header: React.FC<HeaderProps> = ({ currentView, onSelectView }) => 
                   <span>4. What makes this different from a normal social network?</span>
                 </h3>
                 <p>
-                  <strong>Depth over reach</strong>. Your Constellation is hard-capped at 15 connections (<em>“Depth has a boundary”</em>). Communication happens through slow, dissolving paper letters (<em>Slow Threads</em>) rather than instant noise.
+                  <strong>Depth over reach</strong>. Your Constellation Circle is hard-capped at 15 connections (<em>“Depth has a boundary”</em>). Communication happens through slow, dissolving paper letters (<em>Slow Threads</em>) rather than instant noise.
                 </p>
               </div>
             </div>

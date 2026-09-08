@@ -17,7 +17,7 @@ Every interaction in ECHO is designed around a singular question:
 
 | Conventional Social Pattern | Why It Fails Human Connection | ECHO’s Reimagined Paradigm |
 | :--- | :--- | :--- |
-| **Algorithmic Feed & Infinite Scroll** | Maximizes dopamine capture, creates passive consumption, and prioritizes conflict or outrage. | **The Sky (Ambient Spatial Canvas)**: Exploration is spatial, non-linear, and unhurried. Moments drift like sunlight motes on linen. |
+| **Algorithmic Feed & Infinite Scroll** | Maximizes dopamine capture, creates passive consumption, and prioritizes conflict or outrage. | **The Sky (Ambient Spatial Field)**: Exploration is spatial, non-linear, and unhurried. Moments drift like sunlight motes on linen. |
 | **Public Likes, Counts & Upvotes** | Turns vulnerability into a popularity contest; breeds performative anxiety and metric obsession. | **Invisible Private Resonance**: Resonating with a moment is completely invisible to the author and the public—unless it becomes **mutual**. |
 | **Follower Hoarding & Social Graph Bloat** | Encourages shallow networks where users accumulate thousands of strangers they never speak to. | **The Constellation (Hard Capped at 15)**: You can hold at most 15 connections. When full, it is framed not as a restriction, but as a deliberate state of intentional intimacy. |
 | **Permanent Archiving & Digital Hoarding** | Traps people in static digital identities and past records. | **24-Hour Daylight Lifespan**: Moments naturally mature, fade in opacity, and dissolve with the morning light. |
@@ -28,7 +28,7 @@ Every interaction in ECHO is designed around a singular question:
 
 ## ✨ Core Features
 
-### 1. The Sky (Living Light Field)
+### 1. The Sky (Ambient Spatial Field)
 - **Ambient Light Field**: Moments are rendered not as flat circles, but as layered translucent elliptical glows with subtle particle drift and deterministic behavior based on their unique ID (drift direction, speed, scale, opacity, orbit tendency).
 - **Resonance Distance Physics**: Moments respond to pointer proximity with gentle physical repulsion and attraction, communicating social proximity without displaying numbers, likes, or counters.
 - **Attunement Interaction**: Replaces click-to-open with a gradual attunement progression (pointer approach → clarity → moment text legible → author identity manifests → secondary actions emerge).
@@ -40,7 +40,7 @@ Every interaction in ECHO is designed around a singular question:
 - **Tactile Mood Selector**: Interactive physical watercolor/linen swatches; the ambient environment subtly inherits the selected mood's hue.
 - **Physical Release Sequence**: The composition lifts from the card, compresses into a luminous parchment signal, travels into The Sky, and gently settles into its drifting coordinates.
 
-### 3. Resonance Mechanic & Hero Mutual Reveal
+### 3. Resonance Mechanic & Hero Mutual Resonance
 - **Custom Resonance Glyph**: Replaces conventional heart/like icons with dual harmonic opposing arcs creating an acoustic field.
 - **Private Signal**: Resonating sends an invisible signal into the atmosphere with zero public counters.
 - **Hero State Transition**: When mutual resonance occurs, the interface enters a hushed, cinematic multi-phase sequence:
@@ -163,7 +163,7 @@ Works out of the box with Vite defaults. Set build command to `npm run build` an
    - Press **Tab** on your keyboard to navigate between moments and hit **Enter** to open the floating parchment card.
 2. **Trigger Mutual Resonance**:
    - Open the moment by **Elena Vance** (*"Watching the morning light slant across an unmade bed..."*).
-   - Click **Resonate**.
+   - Click **Resonate quietly**.
    - Witness the **Mutual Resonance Reveal**: the harmonic chord chime sounds, avatars align into orbit, and Elena is welcomed into your Constellation!
 3. **Inspect the Constellation**:
    - Switch to the **Constellation** view in the top navigation.

@@ -36,9 +36,9 @@ describe('Official REIMAGINE SOCIAL Alignment Suite', () => {
     it('renders atmospheric orientation whispers directly on Sky Canvas', () => {
       render(<App />);
 
-      expect(screen.getByText(/Spatial Field \(No Feeds\)/i)).toBeInTheDocument();
+      expect(screen.getByText(/Ambient Spatial Field \(No Feeds\)/i)).toBeInTheDocument();
       expect(screen.getByText(/Mutual Resonance \(No Likes\)/i)).toBeInTheDocument();
-      expect(screen.getByText(/Finite Circle \(Cap 15\)/i)).toBeInTheDocument();
+      expect(screen.getByText(/Constellation Circle \(Cap 15\)/i)).toBeInTheDocument();
     });
   });
 
