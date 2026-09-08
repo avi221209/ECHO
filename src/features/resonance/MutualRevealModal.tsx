@@ -79,10 +79,10 @@ export const MutualRevealModal: React.FC<MutualRevealModalProps> = ({
   return (
     <AnimatePresence>
       <div
-        role="dialog"
+        role="alert"
         aria-modal="true"
         aria-labelledby="mutual-hero-title"
-        aria-live="polite"
+        aria-live="assertive"
         className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-cream-950/45 backdrop-blur-xl overflow-y-auto"
       >
         {/* Living Resonant Pulse Field across the sky */}
@@ -122,7 +122,7 @@ export const MutualRevealModal: React.FC<MutualRevealModalProps> = ({
           <button
             type="button"
             onClick={dismissMutualMatch}
-            className="absolute top-6 right-6 p-2 text-ink-500 hover:text-ink-900 hover:bg-resonance-100/80 rounded-full transition-colors z-20"
+            className="absolute top-6 right-6 p-2 text-ink-500 hover:text-ink-900 hover:bg-resonance-100/80 rounded-full transition-colors z-20 focus-visible:ring-2 focus-visible:ring-resonance-500"
             aria-label="Dismiss mutual reveal"
           >
             <X className="w-5 h-5" />
@@ -231,7 +231,7 @@ export const MutualRevealModal: React.FC<MutualRevealModalProps> = ({
             <button
               type="button"
               onClick={handleOpenThread}
-              className="w-full sm:w-auto px-7 py-3 rounded-full text-xs font-semibold text-cream-50 bg-resonance-500 hover:bg-resonance-600 shadow-light-soft hover:shadow-light-glow transition-all flex items-center justify-center space-x-2"
+              className="w-full sm:w-auto px-7 py-3 rounded-full text-xs font-semibold text-cream-50 bg-resonance-500 hover:bg-resonance-600 shadow-light-soft hover:shadow-light-glow transition-all flex items-center justify-center space-x-2 focus-visible:ring-2 focus-visible:ring-resonance-500"
             >
               <Mail className="w-4 h-4" />
               <span>Send a Slow Letter</span>
@@ -240,7 +240,7 @@ export const MutualRevealModal: React.FC<MutualRevealModalProps> = ({
             <button
               type="button"
               onClick={handleGoConstellation}
-              className="w-full sm:w-auto px-6 py-3 rounded-full text-xs font-medium text-ink-700 hover:text-ink-900 bg-cream-100 hover:bg-resonance-100/60 rounded-full border border-resonance-300 transition-colors flex items-center justify-center space-x-2"
+              className="w-full sm:w-auto px-6 py-3 rounded-full text-xs font-medium text-ink-700 hover:text-ink-900 bg-cream-100 hover:bg-resonance-100/60 rounded-full border border-resonance-300 transition-colors flex items-center justify-center space-x-2 focus-visible:ring-2 focus-visible:ring-resonance-500"
             >
               <Compass className="w-4 h-4" />
               <span>Follow the Thread in Constellation</span>

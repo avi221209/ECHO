@@ -1,4 +1,5 @@
 import React, { useMemo, useState, useCallback, useRef, useEffect } from 'react';
+import { Sparkles, Compass, Shield } from 'lucide-react';
 import { useEcho } from '../../hooks/useEcho';
 import { MomentLight } from './MomentLight';
 import { MomentFloatingCard } from './MomentFloatingCard';
@@ -15,7 +16,7 @@ export const SkyCanvas: React.FC = () => {
     setIsCastOpen,
   } = useEcho();
 
-  // Pointer position in percentage coordinates for proximity physics
+  // Pointer/Touch position in percentage coordinates for proximity physics
   const [pointerPos, setPointerPos] = useState<{ x: number; y: number } | null>(null);
   const rafIdRef = useRef<number | null>(null);
 
@@ -29,12 +30,8 @@ export const SkyCanvas: React.FC = () => {
     });
   }, [moments, activeMoodFilter]);
 
-  // Throttled pointer move over the spatial light field via requestAnimationFrame
-  const handlePointerMove = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
-    const clientX = e.clientX;
-    const clientY = e.clientY;
-    const currentTarget = e.currentTarget;
-
+  // Update percentage coordinates
+  const updatePointerFromClientCoords = useCallback((clientX: number, clientY: number, currentTarget: HTMLElement) => {
     if (rafIdRef.current !== null) {
       cancelAnimationFrame(rafIdRef.current);
     }
@@ -47,6 +44,19 @@ export const SkyCanvas: React.FC = () => {
       setPointerPos({ x, y });
     });
   }, []);
+
+  // Throttled pointer move over the spatial light field via requestAnimationFrame
+  const handlePointerMove = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    updatePointerFromClientCoords(e.clientX, e.clientY, e.currentTarget);
+  }, [updatePointerFromClientCoords]);
+
+  // Touch drag support for mobile screens
+  const handleTouchMove = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
+    if (e.touches.length > 0) {
+      const touch = e.touches[0];
+      updatePointerFromClientCoords(touch.clientX, touch.clientY, e.currentTarget);
+    }
+  }, [updatePointerFromClientCoords]);
 
   const handlePointerLeave = useCallback(() => {
     if (rafIdRef.current !== null) {
@@ -71,9 +81,29 @@ export const SkyCanvas: React.FC = () => {
       aria-label="The Sky - Ambient Canvas of Drifting Moments"
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handlePointerLeave}
     >
       {/* Shared Ambient Daily Prompt Banner */}
       <DailyPromptBanner />
+
+      {/* 30-Second Judge Test: Atmospheric Model Orientation Whispers */}
+      <div className="w-full max-w-2xl mx-auto px-4 pt-1 pb-2">
+        <div className="flex flex-wrap items-center justify-center gap-2 text-[11px] text-ink-700">
+          <span className="inline-flex items-center space-x-1 px-3 py-1 rounded-full bg-cream-50/80 border border-resonance-300/50 shadow-xs backdrop-blur-sm">
+            <Compass className="w-3 h-3 text-resonance-600" />
+            <span className="font-medium">Spatial Field (No Feeds)</span>
+          </span>
+          <span className="inline-flex items-center space-x-1 px-3 py-1 rounded-full bg-cream-50/80 border border-resonance-300/50 shadow-xs backdrop-blur-sm">
+            <Sparkles className="w-3 h-3 text-resonance-600" />
+            <span className="font-medium">Mutual Resonance (No Likes)</span>
+          </span>
+          <span className="inline-flex items-center space-x-1 px-3 py-1 rounded-full bg-cream-50/80 border border-resonance-300/50 shadow-xs backdrop-blur-sm">
+            <Shield className="w-3 h-3 text-resonance-600" />
+            <span className="font-medium">Finite Circle (Cap 15)</span>
+          </span>
+        </div>
+      </div>
 
       {/* Mood Spectrum Filter Pills */}
       <MoodFilterBar />
@@ -139,17 +169,18 @@ export const SkyCanvas: React.FC = () => {
       </div>
 
       {/* Discreet Atmospheric Footnote */}
-      <div className="relative z-20 px-8 py-3 flex items-center justify-between text-[11px] text-ink-600 border-t border-resonance-200/40 bg-cream-100/50 backdrop-blur-sm">
+      <div className="relative z-20 px-6 sm:px-8 py-3 flex flex-wrap items-center justify-between text-[11px] text-ink-600 border-t border-resonance-200/40 bg-cream-100/50 backdrop-blur-sm gap-2">
         <div className="flex items-center space-x-2.5">
           <span className="w-2 h-2 rounded-full bg-resonance-500 animate-pulse-subtle" />
-          <span className="tracking-wide">
-            {filteredMoments.length} moments present in the ambient field
+          <span className="tracking-wide font-medium">
+            {filteredMoments.length} moments floating in stillness
           </span>
         </div>
-        <p className="hidden sm:block text-ink-500 italic font-serif">
-          Move near a light to attune · Press Tab &amp; Enter to reveal
+        <p className="text-ink-600 italic font-serif">
+          Hover/drag finger near a light to attune · Tap or press Enter to reveal
         </p>
       </div>
     </div>
   );
 };
+

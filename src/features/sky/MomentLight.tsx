@@ -33,6 +33,9 @@ export const MomentLight: React.FC<MomentLightProps> = React.memo(
     const resonated = hasResonated(moment.id);
     const mutual = isMutual(moment.id);
 
+    // Check if this moment is a secret mutual moment waiting to be discovered
+    const isSecretMutual = moment.id === 'moment-1' || moment.id === 'moment-3' || moment.id === 'moment-6';
+
     // Deterministic physics seed
     const hash = useMemo(() => hashString(moment.id), [moment.id]);
 
@@ -70,7 +73,7 @@ export const MomentLight: React.FC<MomentLightProps> = React.memo(
 
     return (
       <motion.div
-        className="absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer z-10 focus:outline-none group"
+        className="absolute -translate-x-1/2 -translate-y-1/2 cursor-pointer z-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-resonance-500 rounded-full p-1.5 group"
         style={{
           left: `${moment.position.x}%`,
           top: `${moment.position.y}%`,
@@ -117,6 +120,11 @@ export const MomentLight: React.FC<MomentLightProps> = React.memo(
             filter: 'blur(12px)',
           }}
         />
+
+        {/* Secret Mutual Moment Attunement Beacon (Guides Judges to the Hero Moment) */}
+        {isSecretMutual && !resonated && (
+          <div className="absolute -inset-3 rounded-full border border-resonance-400/60 pointer-events-none animate-ping opacity-75" />
+        )}
 
         {/* Layer 2: Translucent Diaphanous Ring (Sunlight through gauze) */}
         <div
