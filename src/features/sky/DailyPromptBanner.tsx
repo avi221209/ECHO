@@ -1,9 +1,9 @@
 import React from 'react';
-import { Sparkles, RefreshCw } from 'lucide-react';
+import { Sparkles, RefreshCw, Feather } from 'lucide-react';
 import { useEcho } from '../../hooks/useEcho';
 
 export const DailyPromptBanner: React.FC = () => {
-  const { dailyPrompt, rotatePrompt } = useEcho();
+  const { dailyPrompt, rotatePrompt, setIsCastOpen } = useEcho();
 
   return (
     <div className="relative z-20 w-full max-w-2xl mx-auto px-4 pt-3 pb-1">
@@ -35,6 +35,15 @@ export const DailyPromptBanner: React.FC = () => {
               <p className="text-xs text-ink-700 font-normal mt-1">
                 {dailyPrompt.context}
               </p>
+              
+              <button
+                type="button"
+                onClick={() => setIsCastOpen(true)}
+                className="mt-3 inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-resonance-500 hover:bg-resonance-600 text-cream-50 text-xs font-medium transition-all shadow-xs"
+              >
+                <Feather className="w-3 h-3" />
+                <span>Cast Response to Prompt</span>
+              </button>
             </div>
           </div>
 

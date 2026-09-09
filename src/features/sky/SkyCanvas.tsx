@@ -6,6 +6,7 @@ import { MomentFloatingCard } from './MomentFloatingCard';
 import { DailyPromptBanner } from './DailyPromptBanner';
 import { MoodFilterBar } from './MoodFilterBar';
 import { EmptySkyState } from './EmptySkyState';
+import { OnboardingManifestoBanner } from '../../components/OnboardingManifestoBanner';
 
 export const SkyCanvas: React.FC = () => {
   const {
@@ -14,6 +15,7 @@ export const SkyCanvas: React.FC = () => {
     selectedMoment,
     setSelectedMoment,
     setIsCastOpen,
+    setIsManifestoOpen,
   } = useEcho();
 
   // Pointer/Touch position in percentage coordinates for proximity physics
@@ -84,6 +86,9 @@ export const SkyCanvas: React.FC = () => {
       onTouchMove={handleTouchMove}
       onTouchEnd={handlePointerLeave}
     >
+      {/* Reimagined Social Orientation Banner */}
+      <OnboardingManifestoBanner onOpenManifesto={() => setIsManifestoOpen?.(true)} />
+
       {/* Shared Ambient Daily Prompt Banner */}
       <DailyPromptBanner />
 

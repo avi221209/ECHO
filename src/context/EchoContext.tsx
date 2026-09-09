@@ -115,18 +115,17 @@ export const EchoProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [activeThreadUser, setActiveThreadUser] = useState<User | null>(null);
   const [mutualMatchEvent, setMutualMatchEvent] = useState<MutualMatchEvent | null>(null);
 
-  // Clean expired slow messages periodically
+  const [isManifestoOpen, setIsManifestoOpen] = useState<boolean>(false);
+
+  // Clean expired slow messages periodically without triggering re-renders unless messages expired
   useEffect(() => {
     const timer = setInterval(() => {
       const now = Date.now();
-      setSlowMessages((prev) =>
-        prev.filter((msg) => {
-          if (msg.expiresAt && now > msg.expiresAt) {
-            return false;
-          }
-          return true;
-        })
-      );
+      setSlowMessages((prev) => {
+        const hasExpired = prev.some((msg) => msg.expiresAt && now > msg.expiresAt);
+        if (!hasExpired) return prev;
+        return prev.filter((msg) => !(msg.expiresAt && now > msg.expiresAt));
+      });
     }, 1500);
 
     return () => clearInterval(timer);
@@ -344,46 +343,87 @@ export const EchoProvider: React.FC<{ children: React.ReactNode }> = ({ children
     initialSlowMessages,
   ]);
 
+  const contextValue = useMemo(
+    () => ({
+      moments,
+      users: SEED_USERS,
+      currentUser: CURRENT_USER,
+      userResonances,
+      mutualResonances,
+      constellation,
+      slowMessages,
+      dailyPrompt,
+      activeMoodFilter,
+      selectedMoment,
+      isCastOpen,
+      isConstellationOpen,
+      isSlowThreadsOpen,
+      activeThreadUser,
+      mutualMatchEvent,
+      isManifestoOpen,
+      audioMuted: audioMutedState,
+      castMoment,
+      resonate,
+      hasResonated,
+      isMutual,
+      sendSlowMessage,
+      markMessageRead,
+      removeConstellationEntry,
+      setSelectedMoment,
+      setActiveMoodFilter,
+      setIsCastOpen,
+      setIsConstellationOpen,
+      setIsSlowThreadsOpen,
+      setActiveThreadUser,
+      setIsManifestoOpen,
+      dismissMutualMatch,
+      rotatePrompt,
+      resetToDefaults,
+      fillConstellationToCap,
+      triggerMutualRevealDemo,
+      toggleAudio,
+    }),
+    [
+      moments,
+      userResonances,
+      mutualResonances,
+      constellation,
+      slowMessages,
+      dailyPrompt,
+      activeMoodFilter,
+      selectedMoment,
+      isCastOpen,
+      isConstellationOpen,
+      isSlowThreadsOpen,
+      activeThreadUser,
+      mutualMatchEvent,
+      isManifestoOpen,
+      audioMutedState,
+      castMoment,
+      resonate,
+      hasResonated,
+      isMutual,
+      sendSlowMessage,
+      markMessageRead,
+      removeConstellationEntry,
+      setSelectedMoment,
+      setActiveMoodFilter,
+      setIsCastOpen,
+      setIsConstellationOpen,
+      setIsSlowThreadsOpen,
+      setActiveThreadUser,
+      setIsManifestoOpen,
+      dismissMutualMatch,
+      rotatePrompt,
+      resetToDefaults,
+      fillConstellationToCap,
+      triggerMutualRevealDemo,
+      toggleAudio,
+    ]
+  );
+
   return (
-    <EchoContext.Provider
-      value={{
-        moments,
-        users: SEED_USERS,
-        currentUser: CURRENT_USER,
-        userResonances,
-        mutualResonances,
-        constellation,
-        slowMessages,
-        dailyPrompt,
-        activeMoodFilter,
-        selectedMoment,
-        isCastOpen,
-        isConstellationOpen,
-        isSlowThreadsOpen,
-        activeThreadUser,
-        mutualMatchEvent,
-        audioMuted: audioMutedState,
-        castMoment,
-        resonate,
-        hasResonated,
-        isMutual,
-        sendSlowMessage,
-        markMessageRead,
-        removeConstellationEntry,
-        setSelectedMoment,
-        setActiveMoodFilter,
-        setIsCastOpen,
-        setIsConstellationOpen,
-        setIsSlowThreadsOpen,
-        setActiveThreadUser,
-        dismissMutualMatch,
-        rotatePrompt,
-        resetToDefaults,
-        fillConstellationToCap,
-        triggerMutualRevealDemo,
-        toggleAudio,
-      }}
-    >
+    <EchoContext.Provider value={contextValue}>
       {children}
     </EchoContext.Provider>
   );

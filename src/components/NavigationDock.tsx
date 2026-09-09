@@ -8,7 +8,7 @@ interface NavigationDockProps {
   onSelectView: (view: 'sky' | 'constellation') => void;
 }
 
-export const NavigationDock: React.FC<NavigationDockProps> = ({
+export const NavigationDock: React.FC<NavigationDockProps> = React.memo(({
   currentView,
   onSelectView,
 }) => {
@@ -28,7 +28,7 @@ export const NavigationDock: React.FC<NavigationDockProps> = ({
   return (
     <nav
       aria-label="Atmospheric Environmental Navigation"
-      className="fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-40 px-3 py-2 rounded-full parchment-glass border border-resonance-300/80 shadow-parchment-elevated backdrop-blur-xl flex items-center space-x-2 sm:space-x-3 transition-all duration-300"
+      className="fixed bottom-3 sm:bottom-6 left-1/2 -translate-x-1/2 z-40 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-full parchment-glass border border-resonance-300/80 shadow-parchment-elevated backdrop-blur-xl flex items-center space-x-1.5 sm:space-x-3 transition-all duration-300 max-w-[96vw] overflow-x-auto shrink-0"
     >
       {/* View: The Sky */}
       <button
@@ -101,4 +101,6 @@ export const NavigationDock: React.FC<NavigationDockProps> = ({
       </button>
     </nav>
   );
-};
+});
+
+NavigationDock.displayName = 'NavigationDock';

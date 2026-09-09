@@ -29,6 +29,7 @@ export interface EchoContextType {
   isSlowThreadsOpen: boolean;
   activeThreadUser: User | null;
   mutualMatchEvent: MutualMatchEvent | null;
+  isManifestoOpen?: boolean;
   audioMuted: boolean;
   
   // Actions
@@ -45,6 +46,7 @@ export interface EchoContextType {
   setIsConstellationOpen: (open: boolean) => void;
   setIsSlowThreadsOpen: (open: boolean) => void;
   setActiveThreadUser: (user: User | null) => void;
+  setIsManifestoOpen?: (open: boolean) => void;
   dismissMutualMatch: () => void;
   rotatePrompt: () => void;
   resetToDefaults: () => void;
