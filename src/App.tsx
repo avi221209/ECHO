@@ -1,42 +1,24 @@
-import React, { useState, Suspense, lazy } from 'react';
+import React, { useState } from 'react';
 import { LazyMotion, domAnimation } from 'framer-motion';
 import { EchoProvider } from './context/EchoContext';
 import { Header } from './components/Header';
 import { SkyCanvas } from './features/sky/SkyCanvas';
 import { NavigationDock } from './components/NavigationDock';
-import { AmbientLoader } from './components/AmbientLoader';
 import { EvaluatorMode } from './components/EvaluatorMode';
-
-// Code-split route-level and modal features for performance optimization
-const ConstellationGraph = lazy(() =>
-  import('./features/constellation/ConstellationGraph').then((m) => ({
-    default: m.ConstellationGraph,
-  }))
-);
-
-const CastMomentModal = lazy(() =>
-  import('./features/cast/CastMomentModal').then((m) => ({
-    default: m.CastMomentModal,
-  }))
-);
-
-const MutualRevealModal = lazy(() =>
-  import('./features/resonance/MutualRevealModal').then((m) => ({
-    default: m.MutualRevealModal,
-  }))
-);
-
-const SlowThreadsModal = lazy(() =>
-  import('./features/threads/SlowThreadsModal').then((m) => ({
-    default: m.SlowThreadsModal,
-  }))
-);
+import { AtmosphericGrain } from './components/AtmosphericGrain';
+import { ConstellationGraph } from './features/constellation/ConstellationGraph';
+import { CastMomentModal } from './features/cast/CastMomentModal';
+import { MutualRevealModal } from './features/resonance/MutualRevealModal';
+import { SlowThreadsModal } from './features/threads/SlowThreadsModal';
 
 const MainAppContent: React.FC = () => {
   const [currentView, setCurrentView] = useState<'sky' | 'constellation'>('sky');
 
   return (
     <div className="relative min-h-screen bg-cream-100 flex flex-col font-sans selection:bg-resonance-200">
+      {/* Tactile Linen & Paper Texture Grain */}
+      <AtmosphericGrain />
+
       {/* Ambient background light fields */}
       <div
         className="pointer-events-none fixed inset-0 overflow-hidden"
@@ -50,12 +32,10 @@ const MainAppContent: React.FC = () => {
       {/* Embedded Ambient Header */}
       <Header currentView={currentView} onSelectView={setCurrentView} />
 
-      {/* Main Viewport Area with Code Splitting */}
+      {/* Main Viewport Area */}
       <main className="relative z-10 flex-1 flex flex-col w-full">
-        <Suspense fallback={<AmbientLoader message="Gathering morning light..." />}>
-          {currentView === 'sky' && <SkyCanvas />}
-          {currentView === 'constellation' && <ConstellationGraph />}
-        </Suspense>
+        {currentView === 'sky' && <SkyCanvas />}
+        {currentView === 'constellation' && <ConstellationGraph />}
       </main>
 
       {/* Floating Spatial Navigation Dock */}
@@ -64,12 +44,10 @@ const MainAppContent: React.FC = () => {
       {/* Hidden Evaluator Suite (Ctrl+Shift+E) */}
       <EvaluatorMode />
 
-      {/* Lazy Modals with Suspense */}
-      <Suspense fallback={null}>
-        <CastMomentModal />
-        <MutualRevealModal onOpenConstellation={() => setCurrentView('constellation')} />
-        <SlowThreadsModal />
-      </Suspense>
+      {/* Feature Modals */}
+      <CastMomentModal />
+      <MutualRevealModal onOpenConstellation={() => setCurrentView('constellation')} />
+      <SlowThreadsModal />
     </div>
   );
 };

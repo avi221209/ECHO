@@ -7,6 +7,7 @@ import { DailyPromptBanner } from './DailyPromptBanner';
 import { MoodFilterBar } from './MoodFilterBar';
 import { EmptySkyState } from './EmptySkyState';
 import { OnboardingManifestoBanner } from '../../components/OnboardingManifestoBanner';
+import { DustParticles } from '../../components/DustParticles';
 
 export const SkyCanvas: React.FC = () => {
   const {
@@ -16,6 +17,7 @@ export const SkyCanvas: React.FC = () => {
     setSelectedMoment,
     setIsCastOpen,
     setIsManifestoOpen,
+    resonanceEchoEvent,
   } = useEcho();
 
   // Pointer/Touch position in percentage coordinates for proximity physics
@@ -86,6 +88,9 @@ export const SkyCanvas: React.FC = () => {
       onTouchMove={handleTouchMove}
       onTouchEnd={handlePointerLeave}
     >
+      {/* Organic Dust Light Motes drifting in background */}
+      <DustParticles mood={activeMoodFilter} />
+
       {/* Reimagined Social Orientation Banner */}
       <OnboardingManifestoBanner onOpenManifesto={() => setIsManifestoOpen?.(true)} />
 
@@ -126,6 +131,24 @@ export const SkyCanvas: React.FC = () => {
           <div className="absolute bottom-1/4 right-1/4 w-[480px] h-[480px] rounded-full bg-ambient-100/40 blur-[100px]" />
           <div className="absolute top-1/2 right-1/3 w-[360px] h-[360px] rounded-full bg-cream-50/80 blur-[80px]" />
         </div>
+
+        {/* Section 12: Resonance Echo Distant Ripple Signal */}
+        {resonanceEchoEvent && (
+          <div
+            className="absolute pointer-events-none z-30 transition-all duration-700"
+            style={{
+              left: `${resonanceEchoEvent.position.x}%`,
+              top: `${resonanceEchoEvent.position.y}%`,
+            }}
+          >
+            <div className="relative flex items-center justify-center">
+              <div className="w-16 h-16 rounded-full border-2 border-resonance-400/80 bg-resonance-200/20 animate-ping" />
+              <span className="absolute top-full mt-2 whitespace-nowrap text-[11px] font-serif italic text-resonance-900 bg-cream-50/95 px-3 py-1 rounded-full border border-resonance-300 shadow-md animate-in fade-in zoom-in-95">
+                Something may have answered...
+              </span>
+            </div>
+          </div>
+        )}
 
         {/* Living Moments adrift in the canvas */}
         {filteredMoments.length > 0 ? (

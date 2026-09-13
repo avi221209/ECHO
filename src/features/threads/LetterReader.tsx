@@ -40,8 +40,11 @@ export const LetterReader: React.FC<LetterReaderProps> = React.memo(({
           : null;
 
         // Calculate subtle ink dispersion based on age
-        const opacityRatio = remainingSec !== null ? Math.max(0.18, remainingSec / 45) : 1;
-        const blurPx = remainingSec !== null && remainingSec < 12 ? (12 - remainingSec) * 0.35 : 0;
+        const opacityRatio = remainingSec !== null ? Math.max(0.12, remainingSec / 45) : 1;
+        const blurPx = remainingSec !== null && remainingSec < 10 ? (10 - remainingSec) * 0.45 : 0;
+        const letterSpacing = remainingSec !== null && remainingSec < 8 ? `${(8 - remainingSec) * 0.02}em` : 'normal';
+
+        const isDissolvingSoon = remainingSec !== null && remainingSec <= 6;
 
         return (
           <div
@@ -49,24 +52,27 @@ export const LetterReader: React.FC<LetterReaderProps> = React.memo(({
             className={`flex flex-col ${isFromSelf ? 'items-end' : 'items-start'}`}
           >
             <div
-              className={`relative max-w-lg p-6 sm:p-7 rounded-[1.8rem] transition-all duration-700 shadow-sm border ${
+              className={`relative max-w-lg p-7 sm:p-9 rounded-[2rem] transition-all duration-700 shadow-sm border ${
+                isRead ? 'animate-unfold-paper' : ''
+              } ${
                 isFromSelf
-                  ? 'bg-resonance-100/60 border-resonance-300/80 text-ink-900'
+                  ? 'bg-resonance-100/70 border-resonance-300/80 text-ink-900'
                   : isRead
-                    ? 'bg-cream-50/90 border-resonance-300/60 text-ink-800'
+                    ? 'bg-cream-50/95 border-resonance-300/60 text-ink-900 paper-surface'
                     : 'bg-cream-50 border-resonance-500/80 text-ink-900 shadow-light-soft'
               }`}
               style={{
                 opacity: opacityRatio,
                 filter: blurPx > 0 ? `blur(${blurPx}px)` : 'none',
+                letterSpacing,
               }}
             >
-              <blockquote className="font-serif text-lg sm:text-xl font-light leading-relaxed">
+              <blockquote className="font-serif text-xl sm:text-2xl font-light leading-relaxed">
                 “{msg.text}”
               </blockquote>
 
               {/* Letter Footer */}
-              <div className="flex items-center justify-between gap-4 text-xs text-ink-500 mt-4 pt-3 border-t border-resonance-200/50">
+              <div className="flex items-center justify-between gap-4 text-xs text-ink-500 mt-5 pt-3 border-t border-resonance-200/50">
                 <span className="font-light">
                   {new Date(msg.createdAt).toLocaleTimeString([], {
                     hour: '2-digit',
@@ -80,14 +86,18 @@ export const LetterReader: React.FC<LetterReaderProps> = React.memo(({
                       <button
                         type="button"
                         onClick={() => onUnfoldLetter(msg.id)}
-                        className="px-3 py-1 bg-resonance-500 hover:bg-resonance-600 text-cream-50 rounded-full font-medium transition-colors flex items-center space-x-1.5 shadow-xs"
+                        className="px-3.5 py-1.5 bg-resonance-500 hover:bg-resonance-600 text-cream-50 rounded-full font-medium transition-colors flex items-center space-x-1.5 shadow-xs text-xs"
                       >
-                        <Eye className="w-3 h-3" />
+                        <Eye className="w-3.5 h-3.5" />
                         <span>Unfold Letter</span>
                       </button>
+                    ) : isDissolvingSoon ? (
+                      <span className="text-resonance-900 italic font-serif text-xs font-medium animate-pulse">
+                        That moment has passed...
+                      </span>
                     ) : (
                       <span className="text-resonance-800 italic font-serif text-xs">
-                        Ink dissolving ({remainingSec}s)...
+                        Ink softly dispersing into mist...
                       </span>
                     )}
                   </div>

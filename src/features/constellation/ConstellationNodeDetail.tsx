@@ -86,30 +86,80 @@ export const ConstellationNodeDetail: React.FC<ConstellationNodeDetailProps> = (
       </div>
 
       {/* Visual Narrative: The Relationship Memory Thread */}
-      <div className="space-y-3 mb-6 p-4 rounded-2xl bg-cream-100/80 border border-resonance-300/50 shadow-inner">
-        <div className="flex items-center space-x-2 text-xs font-semibold uppercase tracking-wider text-resonance-800">
+      <div className="space-y-3 mb-6 p-5 rounded-2xl bg-cream-100/90 border border-resonance-300/60 shadow-inner">
+        <div className="flex items-center space-x-2 text-xs font-semibold uppercase tracking-wider text-resonance-800 pb-2 border-b border-resonance-200/50">
           <ResonanceGlyph size={14} mutual />
-          <span>The Memory Thread</span>
+          <span>The Relationship Origin Story</span>
         </div>
 
-        {catalystMoment ? (
-          <div className="pt-1">
-            <p className="font-serif text-base sm:text-lg italic text-ink-900 leading-snug">
-              “{catalystMoment.text}”
-            </p>
-            <span className="block text-[11px] text-ink-500 font-light mt-2">
-              The unspoken thought that sparked your mutual resonance.
+        {/* 4-Step Story Trace */}
+        <div className="space-y-2.5 pt-1 text-left text-xs">
+          {/* Step 1: Catalyst Moment */}
+          <div className="flex items-start space-x-2.5">
+            <span className="w-5 h-5 rounded-full bg-resonance-200 text-resonance-900 font-mono text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">
+              1
             </span>
+            <div>
+              <span className="font-semibold uppercase text-[10px] tracking-wider text-resonance-800 block">
+                Catalyst Moment
+              </span>
+              {catalystMoment ? (
+                <p className="font-serif text-sm italic text-ink-900 leading-snug mt-0.5">
+                  “{catalystMoment.text}”
+                </p>
+              ) : (
+                <p className="font-serif text-sm italic text-ink-700 mt-0.5">
+                  A quiet thought shared in the morning light.
+                </p>
+              )}
+            </div>
           </div>
-        ) : (
-          <p className="font-serif text-sm italic text-ink-700">
-            Connected through shared stillness.
-          </p>
-        )}
 
-        <div className="flex items-center space-x-2 text-xs text-ink-600 pt-2 border-t border-resonance-200/50">
-          <Calendar className="w-3.5 h-3.5 text-resonance-700" />
-          <span>Walking together since {connectedDate}</span>
+          {/* Step 2: Resonance */}
+          <div className="flex items-start space-x-2.5">
+            <span className="w-5 h-5 rounded-full bg-resonance-200 text-resonance-900 font-mono text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">
+              2
+            </span>
+            <div>
+              <span className="font-semibold uppercase text-[10px] tracking-wider text-resonance-800 block">
+                Resonance
+              </span>
+              <p className="text-ink-600 font-light text-[11px]">
+                A quiet signal sent into stillness without public metrics.
+              </p>
+            </div>
+          </div>
+
+          {/* Step 3: Mutuality */}
+          <div className="flex items-start space-x-2.5">
+            <span className="w-5 h-5 rounded-full bg-resonance-200 text-resonance-900 font-mono text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">
+              3
+            </span>
+            <div>
+              <span className="font-semibold uppercase text-[10px] tracking-wider text-resonance-800 block">
+                Mutuality
+              </span>
+              <p className="text-ink-600 font-light text-[11px]">
+                Both attuned to the same frequency without broadcast or feeds.
+              </p>
+            </div>
+          </div>
+
+          {/* Step 4: Connection */}
+          <div className="flex items-start space-x-2.5">
+            <span className="w-5 h-5 rounded-full bg-resonance-500 text-cream-50 font-mono text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">
+              4
+            </span>
+            <div>
+              <span className="font-semibold uppercase text-[10px] tracking-wider text-resonance-900 block">
+                Connection
+              </span>
+              <div className="flex items-center space-x-1.5 text-ink-700 text-[11px] font-medium mt-0.5">
+                <Calendar className="w-3 h-3 text-resonance-700" />
+                <span>Woven into Constellation on {connectedDate}</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 

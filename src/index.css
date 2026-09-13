@@ -71,11 +71,53 @@
     90% {
       opacity: 0.5;
       filter: blur(1.5px);
+      letter-spacing: 0.02em;
     }
     100% {
       opacity: 0;
       filter: blur(5px);
       transform: translateY(-4px);
+      letter-spacing: 0.08em;
+    }
+  }
+
+  /* Unfolding paper animation for slow letters */
+  .animate-unfold-paper {
+    animation: unfoldPaper 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    transform-origin: top center;
+  }
+
+  @keyframes unfoldPaper {
+    0% {
+      opacity: 0.3;
+      transform: scaleY(0.7) rotateX(-15deg);
+    }
+    100% {
+      opacity: 1;
+      transform: scaleY(1) rotateX(0deg);
+    }
+  }
+
+  /* Memory Trace ripple for expired moments */
+  .animate-memory-trace {
+    animation: memoryTrace 2.5s ease-out forwards;
+  }
+
+  @keyframes memoryTrace {
+    0% {
+      transform: scale(0.8);
+      opacity: 0.8;
+      box-shadow: 0 0 0px rgba(212, 168, 87, 0.6);
+    }
+    50% {
+      transform: scale(1.6);
+      opacity: 0.4;
+      box-shadow: 0 0 25px rgba(212, 168, 87, 0.3);
+    }
+    100% {
+      transform: scale(2.4);
+      opacity: 0;
+      box-shadow: 0 0 50px rgba(212, 168, 87, 0);
     }
   }
 
@@ -127,3 +169,4 @@
     scroll-behavior: auto !important;
   }
 }
+

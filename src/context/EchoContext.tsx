@@ -114,6 +114,10 @@ export const EchoProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [isSlowThreadsOpen, setIsSlowThreadsOpen] = useState<boolean>(false);
   const [activeThreadUser, setActiveThreadUser] = useState<User | null>(null);
   const [mutualMatchEvent, setMutualMatchEvent] = useState<MutualMatchEvent | null>(null);
+  const [resonanceEchoEvent, setResonanceEchoEvent] = useState<{
+    momentId: string;
+    position: { x: number; y: number };
+  } | null>(null);
 
   const [isManifestoOpen, setIsManifestoOpen] = useState<boolean>(false);
 
@@ -224,6 +228,12 @@ export const EchoProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return { isMutual: true, connectionUser: author };
       }
 
+      // Section 12: Resonance Echo — non-mutual resonance spawns a subtle distant ripple
+      const randomX = Math.floor(Math.random() * 70) + 15;
+      const randomY = Math.floor(Math.random() * 60) + 20;
+      setResonanceEchoEvent({ momentId, position: { x: randomX, y: randomY } });
+      setTimeout(() => setResonanceEchoEvent(null), 3500);
+
       return { isMutual: false };
     },
     [
@@ -290,6 +300,10 @@ export const EchoProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setMutualMatchEvent(null);
   }, []);
 
+  const dismissResonanceEcho = useCallback(() => {
+    setResonanceEchoEvent(null);
+  }, []);
+
   const rotatePrompt = useCallback(() => {
     setPromptIndex((prev) => (prev + 1) % DAILY_PROMPTS.length);
   }, [setPromptIndex]);
@@ -332,6 +346,7 @@ export const EchoProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setPromptIndex(0);
     setSelectedMoment(null);
     setMutualMatchEvent(null);
+    setResonanceEchoEvent(null);
   }, [
     setMoments,
     setUserResonances,
@@ -360,6 +375,7 @@ export const EchoProvider: React.FC<{ children: React.ReactNode }> = ({ children
       isSlowThreadsOpen,
       activeThreadUser,
       mutualMatchEvent,
+      resonanceEchoEvent,
       isManifestoOpen,
       audioMuted: audioMutedState,
       castMoment,
@@ -377,6 +393,7 @@ export const EchoProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setActiveThreadUser,
       setIsManifestoOpen,
       dismissMutualMatch,
+      dismissResonanceEcho,
       rotatePrompt,
       resetToDefaults,
       fillConstellationToCap,
@@ -397,6 +414,7 @@ export const EchoProvider: React.FC<{ children: React.ReactNode }> = ({ children
       isSlowThreadsOpen,
       activeThreadUser,
       mutualMatchEvent,
+      resonanceEchoEvent,
       isManifestoOpen,
       audioMutedState,
       castMoment,
@@ -414,6 +432,7 @@ export const EchoProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setActiveThreadUser,
       setIsManifestoOpen,
       dismissMutualMatch,
+      dismissResonanceEcho,
       rotatePrompt,
       resetToDefaults,
       fillConstellationToCap,

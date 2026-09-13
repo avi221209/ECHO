@@ -13,6 +13,11 @@ export interface MutualMatchEvent {
   user: User;
 }
 
+export interface ResonanceEchoEvent {
+  momentId: string;
+  position: { x: number; y: number };
+}
+
 export interface EchoContextType {
   moments: Moment[];
   users: Record<string, User>;
@@ -29,6 +34,7 @@ export interface EchoContextType {
   isSlowThreadsOpen: boolean;
   activeThreadUser: User | null;
   mutualMatchEvent: MutualMatchEvent | null;
+  resonanceEchoEvent?: ResonanceEchoEvent | null;
   isManifestoOpen?: boolean;
   audioMuted: boolean;
   
@@ -48,6 +54,7 @@ export interface EchoContextType {
   setActiveThreadUser: (user: User | null) => void;
   setIsManifestoOpen?: (open: boolean) => void;
   dismissMutualMatch: () => void;
+  dismissResonanceEcho?: () => void;
   rotatePrompt: () => void;
   resetToDefaults: () => void;
   fillConstellationToCap: () => void;
